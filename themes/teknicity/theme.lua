@@ -1,7 +1,7 @@
 --[[
 
-     Powerarrow Dark Awesome WM theme
-     github.com/lcpz
+     Teknicity Awesome WM theme, inspired from Powerarrow Dark Awesome WM theme
+     from github.com/lcpz
 
 --]]
 
