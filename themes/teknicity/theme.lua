@@ -7,6 +7,7 @@
 
 local gears = require("gears")
 local lain  = require("lain")
+local extra = require("extra")
 local awful = require("awful")
 local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
@@ -72,7 +73,7 @@ theme.widget_scissors                           = theme.dir .. "/icons/scissors.
 theme.widget_task                               = theme.dir .. "/icons/task.png"
 theme.widget_task_icon                          = theme.dir .. "/icons/taskwarrior.png"
 theme.widget_weather                            = theme.dir .. "/icons/dish.png"
-theme.tasklist_plain_task_name                  = true
+theme.tasklist_plain_task_name                  = false
 theme.tasklist_disable_icon                     = false
 theme.useless_gap                               = dpi(4)
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
@@ -265,7 +266,7 @@ local scissors = wibox.widget.imagebox(theme.widget_scissors)
 scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
 
 local wanip_icon = wibox.widget.imagebox(theme.widget_battery)
-local wanip =  lain.widget.contrib.wanip({
+local wanip =  extra.widget.wanip({
     settings = function()
         widget:set_markup(markup.font(theme.font, 'wan : ' .. wanip_now))
     end
@@ -299,7 +300,7 @@ local arrr_ld = separators.arrow_right("alpha", theme.bg_focus)
 
 function theme.at_screen_connect(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = awful.util.terminal, followtag = true, name = 'Quake' })
+    s.quake = lain.util.quake({ app = awful.util.terminal .. ' -xrm /home/rustx/.Xdefaults', followtag = true, name = 'Quake' })
 
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper

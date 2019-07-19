@@ -17,13 +17,12 @@ local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 local lain          = require("lain")
 local menubar       = require("menubar")
---local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
-local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 local dpi           = require("beautiful.xresources").apply_dpi
-
-                      require("precious.utils")
+local freedesktop   = require("freedesktop")
+local extra         = require("extra")
+local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 -- }}}
 
@@ -85,7 +84,7 @@ local browser      = "brave-browser"
 local guieditor    = "gedit"
 local scrlocker    = "xscreensaver-command --lock"
 
-local touchpad_ids = get_touchpad_ids()
+local touchpad_ids = extra.utils.get_touchpad_ids()
 
 awful.util.terminal = terminal
 awful.util.tagnames = {
@@ -94,10 +93,10 @@ awful.util.tagnames = {
     { ["[desk]"] = { 1, 1, 1, 2 } },
     { ["[dev]"] = { 1, 1, 1, 1 } },
     { ["[shell]"] = { 1, 1, 3, 2 } },
-    { ["[irc]"] = { 1, 1, 1, 6 } },
-    { ["[media]"] = { 1, 2, 3, 6 } },
+    { ["[irc]"] = { 1, 1, 1, 1 } },
+    { ["[media]"] = { 1, 2, 3, 1 } },
     { ["[sys]"] = { 1, 1, 1, 1 } },
-    { ["[zik]"] = { 1, 2, 3, 6 } },
+    { ["[zik]"] = { 1, 2, 3, 1 } },
 }
 
 awful.layout.layouts = {
@@ -188,7 +187,7 @@ lain.layout.cascade.tile.extra_padding = dpi(5)
 lain.layout.cascade.tile.nmaster       = 5
 lain.layout.cascade.tile.ncol          = 2
 
-beautiful.init(get_theme_path() .. "theme.lua" )
+beautiful.init(extra.utils.get_theme_path() .. "theme.lua" )
 -- }}}
 
 -- {{{ Menu
@@ -199,22 +198,22 @@ local myawesomemenu = {
     { "restart", awesome.restart },
     { "quit", function() awesome.quit() end }
 }
---awful.util.mymainmenu = freedesktop.menu.build({
---    icon_size = beautiful.menu_height or dpi(16),
---    before = {
---        { "Awesome", myawesomemenu, beautiful.awesome_icon },
---        -- other triads can be put here
---    },
---    after = {
---        { "Open terminal", terminal },
---        -- other triads can be put here
---    }
---})
 awful.util.mymainmenu = awful.menu({
     items = {
         { "awesome", myawesomemenu, beautiful.awesome_icon },
         --{ "Debian", debian.menu.Debian_menu.Debian },
         { "open terminal", terminal }
+    }
+})
+awful.util.mymainmenu = freedesktop.menu.build({
+    icon_size = beautiful.menu_height or dpi(16),
+    before = {
+        { "awesome", myawesomemenu, beautiful.awesome_icon },
+        -- other triads can be put here
+    },
+    after = {
+        { "open terminal", terminal },
+        -- other triads can be put here
     }
 })
 ---- hide menu when mouse leaves it
@@ -272,7 +271,7 @@ globalkeys = my_table.join(
               {description = "lock screen", group = "hotkeys"}),
 
     -- Typematrix layout
-    awful.key({ modkey, altkey }, "k", function() awful.spawn("feh -Nx " .. get_theme_path() .. "typematrix_layout.png") end,
+    awful.key({ modkey, altkey }, "k", function() awful.spawn("feh -Nx " .. extra.utils.get_theme_path() .. "typematrix_layout.png") end,
               { description = "show Typematrix layout", group = "applications" }),
 
     -- Hotkeys
@@ -285,6 +284,20 @@ globalkeys = my_table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
+
+    -- Xrandr management
+		awful.key({altkey}, "q", function() extra.xrandr.xrandr() end ),
+
+    -- Awesome switcher
+    awful.key({ "Mod1",           }, "Tab",
+        function ()
+            extra.switcher.switch( 1, "Mod1", "Alt_L", "Shift", "Tab")
+        end),
+
+    awful.key({ "Mod1", "Shift"   }, "Tab",
+        function ()
+            extra.switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
+        end),
 
     -- Non-empty tag browsing
     awful.key({ altkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
@@ -750,8 +763,8 @@ awful.rules.rules = {
     -- Tag #3 [dev]
     {
         rule_any = {
-            class = { "jetbrains-pycharm-ce", "jetbrains-goland", "jetbrains-idea-ce" },
-            name = { "vim_ide", "GoLand" }
+            class = { "jetbrains-pycharm", "jetbrains-pycharm-ce", "jetbrains-goland", "jetbrains-idea-ce" },
+            name = { "PyCharm", "vim_ide", "GoLand" }
         },
         properties = { screen = get_screen("dev"), tag = "[dev]", switchtotag = true }
     },
@@ -790,7 +803,7 @@ awful.rules.rules = {
     {
         rule_any = {
             name = { "Bluetooth Devices", "Remmina", "System Settings" },
-            class = { "Arandr", "Seahorse", "Pavucontrol", "Nm-applet", "Nm-connection-editor", "Ibus-setup", "cloud-backup-ui" }
+            class = { "QEMU", "Virt-manager", "VirtualBox", "Arandr", "Seahorse", "Pavucontrol", "Nm-applet", "Nm-connection-editor", "Ibus-setup", "cloud-backup-ui" }
         },
         properties = { screen = get_screen("sys"), tag = "[sys]", switchtotag = true }
     },
