@@ -7,8 +7,9 @@ local awful = require("awful")
 local themes_path = gfs.get_themes_dir()
 local config_path = gfs.get_dir("config")
 
+local utils = {}
 
-function get_tuntap_ifaces()
+function utils.get_tuntap_ifaces()
 	local iface = {}
     for line in io.lines("/proc/net/dev") do
         local dev = string.match(line, '%s+([tun|tap]-[%d]-):%s+')
@@ -19,7 +20,7 @@ function get_tuntap_ifaces()
     return iface
 end
 
-function get_active_ifaces()
+function utils.get_active_ifaces()
     local iface = {}
     for line in io.lines("/proc/net/dev") do
         local dev = string.match(line, '^%s-([en|sl|wl|ww|pp|et][%l%d+]+):%s+')
@@ -31,7 +32,7 @@ function get_active_ifaces()
     return iface
 end
 
-function readfile(path, mode)
+function utils.readfile(path, mode)
 	local f, ret
 
 	f = assert(io.open(path, "r"))
@@ -41,7 +42,7 @@ function readfile(path, mode)
 	return ret
 end
 
-function get_theme()
+function utils.get_theme()
 	local theme = os.getenv('AWESOME_THEME')
 	if theme == nil then
 		theme = 'teknicity'
@@ -52,12 +53,12 @@ function get_theme()
 	return theme
 end
 
-function get_theme_path()
-	local theme = get_theme()
+function utils.get_theme_path()
+	local theme = utils.get_theme()
 	return config_path .. "themes/" .. theme .. "/"
 end
 
-function get_touchpad_ids()
+function utils.get_touchpad_ids()
     local f
 	local ids = {}
     awful.spawn.with_line_callback("xinput list", {
@@ -78,7 +79,7 @@ function get_touchpad_ids()
     return ids
 end
 
-function get_stick_id()
+function utils.get_stick_id()
     local id
 
     awful.spawn.with_line_callback("xinput list", {
@@ -93,7 +94,7 @@ function get_stick_id()
     return id
 end
 
-function get_screen(tag)
+function utils.get_screen(tag)
 	local screen_count = screen.count()
 
 	if tag == 'www' or tag == 'mail'  then
@@ -119,7 +120,7 @@ function get_screen(tag)
 
 end
 
-function getnbcore()
+function utils.getnbcore()
 	local ret, line, tmp
 
 	for line in io.lines("/proc/cpuinfo") do
@@ -132,7 +133,7 @@ function getnbcore()
 	return ret + 1
 end
 
-function moc_control(action)
+function utils.moc_control(action)
     local info, state
 
     if action == "next" then
@@ -159,3 +160,4 @@ function moc_control(action)
     end
 end
 
+return utils
