@@ -1,3 +1,9 @@
 [submodule "lain"]
 	path = lain
 	url = git@github.com:lcpz/lain.git
+[submodule "extra/switcher"]
+	path = extra/switcher
+	url = git@github.com:berlam/awesome-switcher
+[submodule "freedesktop"]
+	path = freedesktop
+	url = git@github.com:lcpz/awesome-freedesktop
