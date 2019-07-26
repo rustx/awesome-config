@@ -2,7 +2,9 @@
 
 --- Gears filesystem
 local gfs = require("gears.filesystem")
+local gears = require("gears")
 local awful = require("awful")
+local wibox = require("wibox")
 
 local themes_path = gfs.get_themes_dir()
 local config_path = gfs.get_dir("config")

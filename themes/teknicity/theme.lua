@@ -10,6 +10,7 @@ local lain  = require("lain")
 local extra = require("extra")
 local awful = require("awful")
 local wibox = require("wibox")
+
 local dpi   = require("beautiful.xresources").apply_dpi
 
 local os = os
@@ -19,26 +20,34 @@ local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/teknicity"
 theme.wallpaper                                 = theme.dir .. "/wall.png"
 theme.font                                      = "Source Code Pro Medium 8"
+theme.icon_theme                                = "Paper-Vimix"
+theme.awesome_icon                              = theme.dir .. "/icons/awesome.png"
+
 theme.fg_normal                                 = "#8D9F9F"
 theme.fg_focus                                  = "#FFFFFF"
 theme.fg_urgent                                 = "#CC9393"
 theme.bg_normal                                 = "#212121"
 theme.bg_focus                                  = "#313131"
 theme.bg_urgent                                 = "#1A1A1A"
+
 theme.border_width                              = dpi(1)
 theme.border_normal                             = "#3F3F3F"
 theme.border_focus                              = "#7F7F7F"
 theme.border_marked                             = "#CC9393"
+
 theme.tasklist_bg_focus                         = "#1A1A1A"
 theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
+
 theme.menu_height                               = dpi(16)
 theme.menu_width                                = dpi(140)
 theme.wibar_height                              = dpi(22)
+
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 theme.taglist_squares_sel                       = theme.dir .. "/icons/square_sel.png"
 theme.taglist_squares_unsel                     = theme.dir .. "/icons/square_unsel.png"
+
 theme.layout_tile                               = theme.dir .. "/icons/tile.png"
 theme.layout_tileleft                           = theme.dir .. "/icons/tileleft.png"
 theme.layout_tilebottom                         = theme.dir .. "/icons/tilebottom.png"
@@ -51,6 +60,14 @@ theme.layout_max                                = theme.dir .. "/icons/max.png"
 theme.layout_fullscreen                         = theme.dir .. "/icons/fullscreen.png"
 theme.layout_magnifier                          = theme.dir .. "/icons/magnifier.png"
 theme.layout_floating                           = theme.dir .. "/icons/floating.png"
+theme.layout_centerfair                         = theme.dir .. "/icons/centerfair.png"
+theme.layout_termfair                           = theme.dir .. "/icons/termfair.png"
+theme.layout_termfairw                          = theme.dir .. "/icons/termfairw.png"
+theme.layout_centerwork                         = theme.dir .. "/icons/centerworkw.png"
+theme.layout_centerworkh                        = theme.dir .. "/icons/centerworkh.png"
+theme.layout_cascade                            = theme.dir .. "/icons/cascadew.png"
+theme.layout_cascadetile                        = theme.dir .. "/icons/cascadetilew.png"
+
 theme.widget_ac                                 = theme.dir .. "/icons/ac.png"
 theme.widget_battery                            = theme.dir .. "/icons/battery.png"
 theme.widget_battery_low                        = theme.dir .. "/icons/battery_low.png"
@@ -187,7 +204,7 @@ theme.fs = lain.widget.fs({
             elseif pctuse > 81 then color = 'red'
             end
             if fs_now[path].percentage ~= 0 then
-                fs_markup = fs_markup .. markup.font(theme.font, markup(theme.fg_normal, " " .. path .. " ") ..
+                fs_markup = fs_markup .. markup.font(theme.font, markup(theme.fg_normal, " [" .. path .. "] ") ..
                         markup(color, pctuse .. "% "))
             end
         end
@@ -300,7 +317,7 @@ local arrr_ld = separators.arrow_right("alpha", theme.bg_focus)
 
 function theme.at_screen_connect(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = awful.util.terminal .. ' -xrm /home/rustx/.Xdefaults', followtag = true, name = 'Quake' })
+    s.quake = lain.util.quake({ app = awful.util.terminal, followtag = true, name = 'Quake' })
 
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper
@@ -387,6 +404,7 @@ function theme.at_screen_connect(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            awful.widget.launcher({  image = theme.awesome_icon, menu = awful.util.mymainmenu }),
             --spr,
             s.mytaglist,
             s.mypromptbox,

@@ -20,8 +20,10 @@ local menubar       = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local dpi           = require("beautiful.xresources").apply_dpi
-local freedesktop   = require("freedesktop")
+--local freedesktop   = require("freedesktop")
 local extra         = require("extra")
+
+local markup        = lain.util.markup
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 -- }}}
@@ -59,7 +61,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "urxvtd", "unclutter -root", "nm-applet", "volti", "pulseaudio", "blueman-applet", "xscreensaver", "thunar --daemon" }) -- entries must be separated by commas
+run_once({ "compton", "urxvtd", "unclutter -root", "nm-applet", "volti", "pulseaudio", "blueman-applet", "xscreensaver", "thunar --daemon" }) -- entries must be separated by commas
 
 -- This function implements the XDG autostart specification
 --[[
@@ -88,11 +90,11 @@ local touchpad_ids = extra.utils.get_touchpad_ids()
 
 awful.util.terminal = terminal
 awful.util.tagnames = {
-    { ["[www]"] = { 1, 2, 2, 2 } },
+    { ["[www]"] = { 1, 2, 2, 1 } },
     { ["[mail]"] = { 1, 2, 2, 1 } },
-    { ["[desk]"] = { 1, 1, 1, 2 } },
+    { ["[desk]"] = { 1, 1, 1, 1 } },
     { ["[dev]"] = { 1, 1, 1, 1 } },
-    { ["[shell]"] = { 1, 1, 3, 2 } },
+    { ["[shell]"] = { 1, 1, 3, 6 } },
     { ["[irc]"] = { 1, 1, 1, 1 } },
     { ["[media]"] = { 1, 2, 3, 1 } },
     { ["[sys]"] = { 1, 1, 1, 1 } },
@@ -105,23 +107,23 @@ awful.layout.layouts = {
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.max,
-    --awful.layout.suit.max.fullscreen,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
     --awful.layout.suit.corner.nw,
     --awful.layout.suit.corner.ne,
     --awful.layout.suit.corner.sw,
     --awful.layout.suit.corner.se,
-    --lain.layout.cascade,
-    --lain.layout.cascade.tile,
-    -- lain.layout.centerwork,
-    --lain.layout.centerwork.horizontal,
-    --lain.layout.termfair,
-    -- lain.layout.termfair.center,
+    lain.layout.cascade,
+    lain.layout.cascade.tile,
+    lain.layout.centerwork,
+    lain.layout.centerwork.horizontal,
+    lain.layout.termfair,
+    lain.layout.termfair.center,
 }
 
 awful.util.taglist_buttons = my_table.join(

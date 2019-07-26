@@ -15,7 +15,7 @@ local string   = string
 -- extra.widget.wanip
 
 local function factory(args)
-    local wanip               = { widget = wibox.widget.textbox() }
+    local wanip                 = { widget = wibox.widget.textbox() }
     local args                  = args or {}
     local timeout               = args.timeout or 10 -- 1 min
     local current_call          = args.current_call  or "curl -s 'http://ipinfo.io/ip'"
