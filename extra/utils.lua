@@ -11,6 +11,22 @@ local config_path = gfs.get_dir("config")
 
 local utils = {}
 
+utils.prrect = function(radius, tl, tr, br, bl)
+  return function(cr, width, height)
+    gears.shape.partially_rounded_rect(cr, width, height, tl, tr, br, bl, radius)
+  end
+end
+
+function utils.pad(size)
+    local str = ""
+    for i = 1, size do
+        str = str .. " "
+    end
+    local pad = wibox.widget.textbox(str)
+    return pad
+end
+
+
 function utils.get_tuntap_ifaces()
 	local iface = {}
     for line in io.lines("/proc/net/dev") do
