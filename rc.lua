@@ -20,8 +20,9 @@ local menubar       = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local dpi           = require("beautiful.xresources").apply_dpi
---local freedesktop   = require("freedesktop")
+local freedesktop   = require("freedesktop")
 local extra         = require("extra")
+local utils         = require("extra.utils")
 
 local markup        = lain.util.markup
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -62,6 +63,51 @@ local function run_once(cmd_arr)
 end
 
 run_once({ "compton", "urxvtd", "unclutter -root", "nm-applet", "volti", "pulseaudio", "blueman-applet", "xscreensaver", "thunar --daemon" }) -- entries must be separated by commas
+
+
+freedesktop.desktop.add_icons({
+    baseicons = {
+        [1] = {
+            label = "Computer",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/devices/computer.png",
+            onclick = "computer://",
+        },
+        [2] = {
+            label = "Home",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/places/user-home.png",
+            onclick = os.getenv("HOME"),
+        },
+        [3] = {
+            label = "Desktop",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/places/user-desktop.png",
+            onclick = os.getenv("HOME") .. "/Desktop",
+        },
+        [4] = {
+            label = "Development",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/places/folder-git.png",
+            onclick = os.getenv("HOME") .. "/Development",
+        },
+        [5] = {
+            label = "Documents",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/places/folder-documents.png",
+            onclick = os.getenv("HOME") .. "/Documents",
+        },
+        [6] = {
+            label = "Downloads",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/places/folder-download.png",
+            onclick = os.getenv("HOME") .. "/Downloads"
+        },
+        [7] = {
+            label = "Trash",
+            icon = "/usr/share/icons/Paper-Vimix/48x48/places/user-trash.png",
+            onclick = "trash://",
+        },
+    },
+    dir = os.getenv("HOME") .. "/Development",
+    labelsize  = { width = 140, height = 20 },
+    margin     = { x = 40, y = 40 },
+    open_with = 'xdg-open'
+})
 
 -- This function implements the XDG autostart specification
 --[[
@@ -265,7 +311,9 @@ root.buttons(my_table.join(
 globalkeys = my_table.join(
     -- Take a screenshot
     -- https://github.com/lcpz/dots/blob/master/bin/screenshot
-    awful.key({ altkey }, "p", function() os.execute("scrot") end,
+    awful.key({ altkey }, "p", function()
+                naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = beautiful.screenshot_icon, icon_size=48})
+                awful.spawn.with_shell("scrot") end,
               {description = "take a screenshot", group = "hotkeys"}),
 
     -- X screen locker
@@ -493,13 +541,13 @@ globalkeys = my_table.join(
         { description = "decrease volume by 5%", group = "system" }),
     awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn("amixer -D pulse sset Master 5%+") end,
         { description = "increase volume by 5%", group = "system" }),
-    awful.key({}, "XF86AudioPrev", function() moc_control("previous") end,
+    awful.key({}, "XF86AudioPrev", function() utils.moc_control("previous") end,
         { description = "play previous song with mocp", group = "system" }),
-    awful.key({}, "XF86AudioPlay", function() moc_control("play") end,
+    awful.key({}, "XF86AudioPlay", function() utils.moc_control("play") end,
         { description = "play music with mocp", group = "system" }),
-    awful.key({ "Shift" }, "XF86AudioPlay", function() moc_control("stop") end,
+    awful.key({ "Shift" }, "XF86AudioPlay", function() utils.moc_control("stop") end,
         { description = "stop music with mocp", group = "system" }),
-    awful.key({}, "XF86AudioNext", function() moc_control("next") end,
+    awful.key({}, "XF86AudioNext", function() utils.moc_control("next") end,
         { description = "play next song with mocp", group = "system" }),
 
     -- ALSA volume control
