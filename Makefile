@@ -5,13 +5,13 @@ gtk_theme:
 	cd /tmp &&\
 	git clone git@github.com:vinceliuice/vimix-gtk-themes.git &&\
 	cd vimix-gtk-themes && \
-	./Install
+	./install.sh -a
 
 gtk_icon:
 	cd /tmp &&\
 	git clone git@github.com:vinceliuice/vimix-icon-theme.git &&\
 	cd vimix-icon-theme && \
-	./install.sh
+	./install.sh -a
 
 git_config:
 	if ! [ -f $HOME/.config/gtkrc-2.0 ] \
@@ -21,7 +21,7 @@ git_config:
         { \
             echo -e "[Settings]"  \
             echo -e "gtk-theme-name = vimix-light-beryl" \
-            echo -e "gtk-icon-theme-name = Paper-Vimix" \
+            echo -e "gtk-icon-theme-name = Vimix" \
             echo -e "gtk-sound-theme-name = ubuntu" \
             echo -e "gtk-icon-sizes = panel-menu-bar=24,24" \
         } > $HOME/.config/gtk-2.0/settings.ini && \
@@ -37,7 +37,7 @@ git_config:
         { \
             echo -e "[Settings]" \
             echo -e "gtk-theme-name = vimix-light-beryl" \
-            echo -e "gtk-icon-theme-name = Paper-Vimix" \
+            echo -e "gtk-icon-theme-name = Vimix" \
             echo -e "gtk-sound-theme-name = ubuntu" \
             echo -e "gtk-icon-sizes = panel-menu-bar=24,24" \
         } > $HOME/.config/gtk-3.0/settings.ini && \
