@@ -69,41 +69,41 @@ freedesktop.desktop.add_icons({
     baseicons = {
         [1] = {
             label = "Computer",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/devices/computer.png",
+            icon = "/usr/share/icons/Vimix/scalable/devices/computer.svg",
             onclick = "computer://",
         },
         [2] = {
             label = "Home",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/places/user-home.png",
+            icon = "/usr/share/icons/Vimix/scalable/places/user-home.svg",
             onclick = os.getenv("HOME"),
         },
         [3] = {
             label = "Desktop",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/places/user-desktop.png",
+            icon = "/usr/share/icons/Vimix/scalable/places/user-desktop.svg",
             onclick = os.getenv("HOME") .. "/Desktop",
         },
         [4] = {
             label = "Development",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/places/folder-git.png",
+            icon = "/usr//share/icons/Vimix/scalable/places/folder-root.svg",
             onclick = os.getenv("HOME") .. "/Development",
         },
         [5] = {
             label = "Documents",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/places/folder-documents.png",
+            icon = "/usr/share/icons/Vimix/scalable/places/folder-documents.svg",
             onclick = os.getenv("HOME") .. "/Documents",
         },
         [6] = {
             label = "Downloads",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/places/folder-download.png",
+            icon = "/usr/share/icons/Vimix/scalable/places/folder-download.svg",
             onclick = os.getenv("HOME") .. "/Downloads"
         },
         [7] = {
             label = "Trash",
-            icon = "/usr/share/icons/Paper-Vimix/48x48/places/user-trash.png",
+            icon = "/usr/share/icons/Vimix/scalable/places/user-trash.svg",
             onclick = "trash://",
         },
     },
-    dir = os.getenv("HOME") .. "/Development",
+    -- dir = os.getenv("HOME") .. "/Development",
     labelsize  = { width = 140, height = 20 },
     margin     = { x = 40, y = 40 },
     open_with = 'xdg-open'
@@ -141,7 +141,7 @@ awful.util.tagnames = {
     { ["[desk]"] = { 1, 1, 1, 1 } },
     { ["[dev]"] = { 1, 1, 1, 1 } },
     { ["[shell]"] = { 1, 1, 3, 6 } },
-    { ["[irc]"] = { 1, 1, 1, 1 } },
+    { ["[talk]"] = { 1, 1, 1, 1 } },
     { ["[media]"] = { 1, 2, 3, 1 } },
     { ["[sys]"] = { 1, 1, 1, 1 } },
     { ["[zik]"] = { 1, 2, 3, 1 } },
@@ -737,7 +737,7 @@ local function get_screen(tag)
 	if tag == 'dev' or tag == 'desk' or tag == 'sys' then
 		return 1
 	end
-	if tag == 'shell' or tag == 'irc' or tag == 'media' then
+	if tag == 'shell' or tag == 'talk' or tag == 'media' then
 		if screen_count == 3 then
 			return 3
 		else
@@ -826,13 +826,13 @@ awful.rules.rules = {
         },
         properties = { screen = get_screen("shell"), tag = "[shell]", switchtotag = true }
     },
-    -- Tag #5 [irc]
+    -- Tag #5 [talk]
     {
         rule_any = {
             name = { "Slack" },
-            class = { "slack" }
+            class = { "slack", "discord" }
         },
-        properties = { screen = get_screen("irc"), tag = "[irc]", switchtotag = true }
+        properties = { screen = get_screen("talk"), tag = "[talk]", switchtotag = true }
     },
     -- Tag #6 [desk]
     {

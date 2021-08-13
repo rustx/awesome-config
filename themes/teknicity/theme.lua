@@ -20,9 +20,10 @@ local utils = require("extra.utils")
 
 local theme = {}
 theme.dir = os.getenv("HOME") .. "/.config/awesome/themes/teknicity"
-theme.wallpaper = theme.dir .. "/wall.png"
+--theme.wallpaper = theme.dir .. "/wall.png"
+theme.wallpaper = theme.dir .. "/forest_background.jfif"
 theme.font = "Source Code Pro Medium 8"
-theme.icon_theme = "Paper-Vimix"
+theme.icon_theme = "Vimix"
 theme.awesome_icon = theme.dir .. "/icons/awesome.png"
 
 theme.fg_normal = "#8D9F9F"
@@ -317,7 +318,6 @@ local arrr_ld = separators.arrow_right("alpha", theme.bg_focus)
 function theme.at_screen_connect(s)
     -- Quake application
     s.quake = lain.util.quake({ app = awful.util.terminal, followtag = true, name = 'Quake' })
-
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper
     if type(wallpaper) == "function" then
