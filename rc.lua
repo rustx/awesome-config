@@ -62,7 +62,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "compton", "urxvtd", "unclutter -root", "nm-applet", "volti", "pulseaudio", "blueman-applet", "xscreensaver", "thunar --daemon" }) -- entries must be separated by commas
+run_once({ "compton", "urxvtd", "unclutter -root", "nm-applet", "pulseaudio", "blueman-applet", "xscreensaver", "thunar --daemon" }) -- entries must be separated by commas
 
 
 freedesktop.desktop.add_icons({
