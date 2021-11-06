@@ -49,14 +49,15 @@ git_config:
 
 
 apt_deps:
-	sudo apt-get update && install -y compton xsel python-pip gtk2-engines-murrine gtk2-engines-pixbuf
+	sudo apt-get update && install -y compton xsel python-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
+	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev
 
 pip_deps: apt-deps
 	pip installl powerline-shell
 
 start_xephyr:
 	if ! pgrep Xephyr; then \
-		Xephyr -ac -br -noreset -screen 1200x800 :2 & \
+		DISPLAY=:0 Xephyr -keybd ephyr,,,xkbmodel=evdev -ac -br -noreset -screen 1200x800 :2 & \
 	fi
 
 stop_xephyr:
