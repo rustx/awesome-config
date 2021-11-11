@@ -7,6 +7,17 @@ local vicious = require("vicious")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
+-- ========================================
+-- Config
+-- ========================================
+
+-- icons path
+local icons_path = beautiful.icons_path .. "fs/"
+
+-- ========================================
+-- Definition
+-- ========================================
+
 local mount_points = function()
   local mp = {}
   for line in io.lines("/proc/mounts") do
@@ -18,20 +29,27 @@ local mount_points = function()
   return mp
 end
 
-local get_color = function(pctuse)
-  local color = beautiful.color.green
-  if pctuse > 51 and pctuse < 71 then color = beautiful.color.yellow
-  elseif pctuse > 71 and pctuse < 81 then color = beautiful.color.orange
-  elseif pctuse > 81 then color = beautiful.color.red
-  end
-  return color
-end
-
 local create_widget = function (screen)
-  local widget = wibox.widget.textbox()
+  local widget = wibox.widget{
+    {
+      id = "image",
+      image = icons_path .. "fs.svg",
+      widget = wibox.widget.imagebox
+    },
+    {
+      id = "text",
+      widget = wibox.widget.textbox
+    },
+    id = "container",
+    layout = wibox.layout.fixed.horizontal,
+  }
+
+  local image_widget = widget:get_children_by_id("image")[1]
+  local text_widget = widget:get_children_by_id("text")[1]
+
   local mp = mount_points()
 
-  local base = "[%s] ${%s used_p} %% "
+  local base = " [%s] ${%s used_p}%%"
   local display = ''
 
   for _, fs in pairs(mp) do
@@ -39,12 +57,12 @@ local create_widget = function (screen)
   end
 
   vicious.cache(vicious.widgets.fs)
-  vicious.register(widget, vicious.widgets.fs, display, 59)
+  vicious.register(text_widget, vicious.widgets.fs, display, 59)
 
   local container = require("widgets.clickable_container")(widget)
 
-  widget.tooltip = require("widgets.tooltip")({ container })
-  widget.tooltip.text = "Fs usage"
+  image_widget.tooltip = require("widgets.tooltip")({ container })
+  image_widget.tooltip.text = "Fs usage"
 
   return container
 end

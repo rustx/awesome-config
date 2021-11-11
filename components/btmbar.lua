@@ -28,7 +28,6 @@ awful.screen.connect_for_each_screen(function (s)
       -- Left widgets
       {
         layout = wibox.layout.fixed.horizontal,
-        require("widgets.container")(wibox.widget.imagebox(beautiful.fs_icon), beautiful.color.darkgrey),
         wibox.container.background(require("widgets.fs_usage")(s),beautiful.color.darkgrey),
         beautiful.arrr_dl,
       },
