@@ -49,8 +49,6 @@ awful.screen.connect_for_each_screen(function(s)
         require("widgets.container")(wibox.widget.imagebox(beautiful.cpu_usage_icon), beautiful.color.darkgrey),
         wibox.container.background(require("widgets.cpu_usage")(s), beautiful.color.darkgrey),
         beautiful.arrl_dl,
-        --wibox.container.background(wibox.widget.imagebox(beautiful.cpu_temp_icon)),
-        require("widgets.container")(wibox.widget.imagebox(beautiful.cpu_temp_icon)),
         require("widgets.cpu_temp")(s),
         beautiful.arrl_ld,
         require("widgets.container")(wibox.widget.imagebox(beautiful.memory_icon), beautiful.color.darkgrey),
