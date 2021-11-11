@@ -18,7 +18,7 @@ local icons_path = beautiful.icons_path .. "fs/"
 -- Definition
 -- ========================================
 
-local mount_points = function()
+local get_mount_points = function()
   local mp = {}
   for line in io.lines("/proc/mounts") do
     local dev = string.match(line, "^/dev/([nvm|sd|hd][%a%d]-[%a%d]+)%s")
@@ -47,12 +47,10 @@ local create_widget = function (screen)
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
 
-  local mp = mount_points()
-
   local base = " [%s] ${%s used_p}%%"
   local display = ''
 
-  for _, fs in pairs(mp) do
+  for _, fs in pairs(get_mount_points()) do
     display = display .. string.format(base, fs, fs, fs, fs)
   end
 
