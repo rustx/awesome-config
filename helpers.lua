@@ -9,6 +9,11 @@ local gears = require("gears")
 
 local beautiful = require("beautiful")
 
+local https = require("ssl.https")
+local http  = require("socket.http")
+local ltn12 = require("ltn12")
+local mime  = require("mime")
+
 local helpers = {}
 
 -- ========================================
@@ -162,6 +167,47 @@ end
 -- Scripts
 -- ========================================
 
+-- make https request
+helpers.https_request = function(host, url, user, pass)
+    local resp = {}
+
+    local status, code, head = https.request {
+      method = "GET",
+      url = host .. url,
+      headers = {
+          ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
+          ["Content-Type"] = "application/json"
+      },
+      sink = ltn12.sink.table(resp)
+    }
+    if code == 200 then
+        return resp, nil
+    else
+        return nil, code
+    end
+end
+
+-- make http request
+helpers.http_request = function(host, url, user, pass)
+    local resp = {}
+
+    local status, code, head = http.request {
+      method = "GET",
+      url = host .. url,
+      headers = {
+          ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
+          ["Content-Type"] = "application/json"
+      },
+      sink = ltn12.sink.table(resp)
+    }
+    if code == 200 then
+        return resp, nil
+    else
+        return nil, code
+    end
+end
+
+
 -- get main process name
 helpers.get_main_process_name = function (cmd)
   -- remove whitespace
@@ -174,6 +220,7 @@ helpers.get_main_process_name = function (cmd)
     or  cmd
 end
 
+-- set dynamic tags
 helpers.dynamic_tags =  function(s)
   local tag_names = {}
   local tag_layouts = {}
@@ -198,13 +245,22 @@ helpers.get_screen = function(t)
 end
 
 -- get percentage colors
-helpers.get_pct_color = function(pct)
-  local color = beautiful.color.green
-  if pct > 51 and pct < 71 then color = beautiful.color.yellow
-  elseif pct > 71 and pct < 81 then color = beautiful.color.orange
-  elseif pct > 81 then color = beautiful.color.red
+helpers.get_pct_color = function(pct, dir)
+  local colors = {
+    [25]  = {["up"] = beautiful.fg_normal,    ["down"] = beautiful.color.red },
+    [50]  = {["up"] = beautiful.color.yellow, ["down"] = beautiful.color.orange },
+    [75]  = {["up"] = beautiful.color.orange, ["down"] = beautiful.color.yellow },
+    [100] = {["up"] = beautiful.color.red,    ["down"] = beautiful.fg_normal },
+  }
+  if pct <= 25 then
+    return colors[25][dir]
+  elseif pct > 25  and pct <= 50 then
+    return colors[50][dir]
+  elseif pct > 50 and pct <= 75 then
+    return colors[75][dir]
+  elseif pct > 75 then
+    return colors[100][dir]
   end
-  return color
 end
 
 -- get vpn interfaces

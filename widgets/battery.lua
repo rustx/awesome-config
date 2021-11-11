@@ -6,8 +6,9 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
-local beautiful = require("beautiful")
 
+local beautiful = require("beautiful")
+local helpers = require("helpers")
 local keys = require("keys")
 
 -- ========================================
@@ -63,7 +64,9 @@ local update_widget = function (widget, _, stat, summary)
   image_widget.image = get_battery_icon(stat.percentage, stat.status)
   image_widget.tooltip.text = string.gsub(summary, "\n$", "")
 
-  text_widget:set_markup(' ' .. stat.percentage .. '%')
+  text_widget:set_markup(
+    '<span color="' .. helpers.get_pct_color(stat.percentage, "down") .. '"> ' .. stat.percentage .. '%</span>'
+  )
 end
 
 

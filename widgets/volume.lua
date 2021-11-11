@@ -64,7 +64,9 @@ local update_widget_percentage = function (widget, percentage)
   image_widget.image = icons_path .. icon_name .. ".svg"
   image_widget.tooltip.text = string.format("Volume is at %s%%", percentage)
 
-  text_widget:set_markup(' ' .. percentage .. '%')
+  text_widget:set_markup(
+    '<span color="' .. helpers.get_pct_color(percentage, "up") .. '"> ' .. percentage .. '%</span>'
+  )
 end
 
 

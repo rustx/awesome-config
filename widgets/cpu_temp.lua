@@ -6,7 +6,7 @@
 local vicious = require("vicious")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-
+local helpers = require("helpers")
 -- ========================================
 -- Config
 -- ========================================
@@ -37,7 +37,17 @@ local create_widget = function (screen)
   local text_widget = widget:get_children_by_id("text")[1]
 
   vicious.cache(vicious.widgets.thermal)
-  vicious.register(text_widget, vicious.widgets.thermal, " $1°C", 13, "thermal_zone0")
+  vicious.register(
+    text_widget,
+    vicious.widgets.thermal,
+    function (widget, args)
+      return (
+        '<span color="%s">%s°C</span>'
+      ):format(helpers.get_pct_color(args[1], "up"), args[1])
+    end,
+    13,
+    "thermal_zone0"
+  )
 
   local container = require("widgets.clickable_container")(widget)
 

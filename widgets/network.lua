@@ -10,6 +10,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 
 local keys = require("keys")
+local helpers = require("helpers")
 
 -- ========================================
 -- Config
@@ -33,7 +34,6 @@ local buttons = function (screen)
   )
 end
 
-
 -- update wireless status
 local update_wireless_status = function (widget, interface, healthy, essid, bitrate, strength)
   local status = healthy
@@ -45,8 +45,11 @@ local update_wireless_status = function (widget, interface, healthy, essid, bitr
     and string.format("wifi-strength-%s", strength_level)
     or  string.format("wifi-strength-%s-alert", strength_level)
 
-  widget.image = icons_path .. icon_name .. ".svg"
-  widget.tooltip.markup = string.format(
+  local image_widget = widget:get_children_by_id("image")[1]
+  local text_widget = widget:get_children_by_id("text")[1]
+
+  image_widget.image = icons_path .. icon_name .. ".svg"
+  image_widget.tooltip.markup = string.format(
     "<b>%s</b>"
     .. "\nESSID: <b>%s</b>"
     .. "\nInterface: <b>%s</b>"
@@ -57,6 +60,9 @@ local update_wireless_status = function (widget, interface, healthy, essid, bitr
     interface,
     strength,
     bitrate
+  )
+  text_widget:set_markup(
+    '<span color="' .. helpers.get_pct_color(strength, "down") .. '"> ' .. strength .. '%</span>'
   )
 end
 
@@ -71,13 +77,17 @@ local update_wired_status = function (widget, interface, healthy)
     and "wired"
     or "wired-alert"
 
-  widget.image = icons_path .. icon_name .. ".svg"
-  widget.tooltip.markup = string.format(
+  local image_widget = widget:get_children_by_id("image")[1]
+  local text_widget = widget:get_children_by_id("text")[1]
+
+  image_widget.image = icons_path .. icon_name .. ".svg"
+  image_widget.tooltip.markup = string.format(
     "<b>%s</b>"
     .. "\nInterface: <b>%s</b>",
     status,
     interface
   )
+  text_widget:set_markup(' N/A')
 end
 
 
@@ -91,16 +101,36 @@ local update_disconnected = function (widget, mode)
     icon_name = "wired-off"
   end
 
-  widget.image = icons_path .. icon_name .. ".svg"
-  widget.tooltip.text = "Network is currently disconnected"
+  local image_widget = widget:get_children_by_id("image")[1]
+  local text_widget = widget:get_children_by_id("text")[1]
+
+  image_widget.image = icons_path .. icon_name .. ".svg"
+  image_widget.tooltip.text = "Network is currently disconnected"
+  text_widget:set_markup(' N/A')
+
 end
 
 -- create widget instance
 local create_widget = function (screen)
-  local widget = wibox.widget {
-    image = icons_path .. 'loading.svg',
-    widget = wibox.widget.imagebox,
+  --local widget = wibox.widget {
+  --  image = icons_path .. 'loading.svg',
+  --  widget = wibox.widget.imagebox,
+  --}
+  local widget = wibox.widget{
+    {
+      id = "image",
+      image = icons_path .. "loading.svg",
+      widget = wibox.widget.imagebox
+    },
+    {
+      id = "text",
+      widget = wibox.widget.textbox
+    },
+    id = "container",
+    layout = wibox.layout.fixed.horizontal,
   }
+
+  local image_widget = widget:get_children_by_id("image")[1]
 
   awesome.connect_signal("daemon::network::status::wireless", function(...)
     update_wireless_status(widget, ...)
@@ -118,8 +148,8 @@ local create_widget = function (screen)
   local container = require("widgets.clickable_container")(widget)
   container:buttons(buttons(screen))
 
-  widget.tooltip = require("widgets.tooltip")({ container })
-  widget.tooltip.text = "Network status unknown"
+  image_widget.tooltip = require("widgets.tooltip")({ container })
+  image_widget.tooltip.text = "Network status unknown"
 
   return container
 end
