@@ -46,7 +46,6 @@ awful.screen.connect_for_each_screen(function(s)
       {
         layout = wibox.layout.fixed.horizontal,
         beautiful.arrl_ld,
-        require("widgets.container")(wibox.widget.imagebox(beautiful.cpu_usage_icon), beautiful.color.darkgrey),
         wibox.container.background(require("widgets.cpu_usage")(s), beautiful.color.darkgrey),
         beautiful.arrl_dl,
         require("widgets.cpu_temp")(s),
