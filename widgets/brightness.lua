@@ -18,7 +18,6 @@ local keys = require("keys")
 -- icons path
 local icons_path = beautiful.icons_path .. "brightness/"
 
-
 -- ========================================
 -- Definition
 -- ========================================

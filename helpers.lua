@@ -197,6 +197,16 @@ helpers.get_screen = function(t)
   end
 end
 
+-- get percentage colors
+helpers.get_pct_color = function(pct)
+  local color = beautiful.color.green
+  if pct > 51 and pct < 71 then color = beautiful.color.yellow
+  elseif pct > 71 and pct < 81 then color = beautiful.color.orange
+  elseif pct > 81 then color = beautiful.color.red
+  end
+  return color
+end
+
 -- get vpn interfaces
 helpers.get_tuntap_ifaces = function()
 	local iface = {}
