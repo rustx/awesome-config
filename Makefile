@@ -50,7 +50,8 @@ git_config:
 
 apt_deps:
 	sudo apt-get update && install -y compton xsel python-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
-	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev
+	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev \
+	lua-sec lua-socket lua-http lua-json lua-cjson
 
 pip_deps: apt-deps
 	pip installl powerline-shell
