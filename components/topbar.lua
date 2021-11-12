@@ -31,10 +31,11 @@ awful.screen.connect_for_each_screen(function(s)
       -- Left widgets
       {
         layout = wibox.layout.fixed.horizontal,
-        wibox.container.background(require("widgets.taglist")(s),beautiful.color.darkgrey),
-        beautiful.arrr_dl,
+        require("widgets.taglist")(s),
+        beautiful.arrr_ld,
         s.promptbox,
-        require("widgets.client_name")(s),
+        wibox.container.background(require("widgets.client_name")(s), beautiful.color.darkgrey),
+        beautiful.arrr_dl
       },
 
       -- Middle widgets

@@ -609,13 +609,13 @@ keys.globalkeys = gears.table.join(
   -- Touchpad on/off shorcuts
   awful.key(
     { modkey, altkey }, "d",
-    function() awful.spawn('xinput --disable ' .. helpers.get_touchpad_ids[1]) end,
+    function() awful.spawn('xinput --disable ' .. helpers.get_touchpad_ids()[1]) end,
     { description = "deactivate touchpad", group = "system" }
   ),
 
   awful.key(
     { modkey, altkey }, "a",
-    function() awful.spawn('xinput --enable ' .. helpers.get_touchpad_ids[1]) end,
+    function() awful.spawn('xinput --enable ' .. helpers.get_touchpad_ids()[1]) end,
     { description = "activate touchpad", group = "system" }
   ),
   -- ========================================

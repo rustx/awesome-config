@@ -234,7 +234,7 @@ theme.cpu_usage_icon = theme.icons_path .. "cpu/cpu_usage.svg"
 -- Hotkeys
 theme.hotkeys_font             = font .. " Bold 10"
 theme.hotkeys_description_font = font .. " 10"
-theme.hotkeys_bg               = color.black .. "aa"
+theme.hotkeys_bg               = color.darkgrey .. "aa"
 theme.hotkeys_border_width     = dpi(1)
 theme.hotkeys_shape            = helpers.rrect
 theme.hotkeys_modifiers_fg     = color.yellow

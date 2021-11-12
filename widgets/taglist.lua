@@ -95,9 +95,6 @@ local create_widget = function (screen)
       spacing = beautiful.taglist_spacing,
       widget_template = {
         widget = wibox.widget.imagebox,
-        text = "taglist_widget",
-        valign = "center",
-        align = "center",
         create_callback = update_tag_icon,
         update_callback = update_tag_icon,
       },
