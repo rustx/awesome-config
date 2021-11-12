@@ -44,6 +44,7 @@ awful.screen.connect_for_each_screen(function (s)
       -- Right widgets
       {
         layout = wibox.layout.fixed.horizontal,
+        require("widgets.net_usage")(s),
         beautiful.arrl_ld,
         wibox.container.background(require("widgets.wanip")(s), beautiful.color.darkgrey),
         beautiful.arrl_dl,
