@@ -30,6 +30,10 @@ awful.screen.connect_for_each_screen(function (s)
         layout = wibox.layout.fixed.horizontal,
         wibox.container.background(require("widgets.fs_usage")(s),beautiful.color.darkgrey),
         beautiful.arrr_dl,
+        require("widgets.crypto_rates")(s, "bitcoin"),
+        beautiful.arrr_ld,
+        wibox.container.background(require("widgets.crypto_rates")(s, "ethereum"), beautiful.color.darkgrey),
+        beautiful.arrr_dl,
       },
 
       -- Middle widgets

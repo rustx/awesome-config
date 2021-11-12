@@ -40,6 +40,12 @@ Languages = {
   { lang = "fr", engine = "xkb:fr::fr" },
 }
 
+-- Crypto coins
+Coins = {
+  "bitcoin",
+  "ethereum",
+}
+
 -- layouts
 awful.layout.layouts = {
   awful.layout.suit.floating,
