@@ -1,17 +1,16 @@
 --
--- wanip.lua
--- wanip daemon
+-- crypo_rates.lua
+-- crypto rates daemon
 -- Dependencies:
 --   curl
 --
 -- Signals:
--- daemon::wanip::address
+-- daemon::crypto::rates
 --   address (string)
 --
 
 local awful = require("awful")
 local gears = require("gears")
---local helpers = require("helpers")
 local json = require("json")
 
 -- ========================================
