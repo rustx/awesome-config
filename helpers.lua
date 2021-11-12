@@ -169,42 +169,42 @@ end
 
 -- make https request
 helpers.https_request = function(host, url, user, pass)
-    local resp = {}
+  local resp = {}
 
-    local status, code, head = https.request {
-      method = "GET",
-      url = host .. url,
-      headers = {
-          ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
-          ["Content-Type"] = "application/json"
-      },
-      sink = ltn12.sink.table(resp)
-    }
-    if code == 200 then
-        return resp, nil
-    else
-        return nil, code
-    end
+  local status, code, head = https.request {
+    method = "GET",
+    url = host .. url,
+    headers = {
+        ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
+        ["Content-Type"] = "application/json"
+    },
+    sink = ltn12.sink.table(resp)
+  }
+  if code == 200 then
+    return resp, nil
+  else
+    return nil, code
+  end
 end
 
 -- make http request
 helpers.http_request = function(host, url, user, pass)
-    local resp = {}
+  local resp = {}
 
-    local status, code, head = http.request {
-      method = "GET",
-      url = host .. url,
-      headers = {
-          ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
-          ["Content-Type"] = "application/json"
-      },
-      sink = ltn12.sink.table(resp)
-    }
-    if code == 200 then
-        return resp, nil
-    else
-        return nil, code
-    end
+  local status, code, head = http.request {
+    method = "GET",
+    url = host .. url,
+    headers = {
+      ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
+      ["Content-Type"] = "application/json"
+    },
+    sink = ltn12.sink.table(resp)
+  }
+  if code == 200 then
+    return resp, nil
+  else
+    return nil, code
+  end
 end
 
 
@@ -228,8 +228,8 @@ helpers.dynamic_tags =  function(s)
 
   for _, tag in pairs(Tags) do
     if tag.screen[count] == s.index then
-       table.insert(tag_names, tag.name)
-       table.insert(tag_layouts, tag.layout)
+      table.insert(tag_names, tag.name)
+      table.insert(tag_layouts, tag.layout)
     end
   end
   awful.tag(tag_names, s, tag_layouts)
@@ -247,10 +247,10 @@ end
 -- get percentage colors
 helpers.get_pct_color = function(pct, dir)
   local colors = {
-    [25]  = {["up"] = beautiful.fg_normal,    ["down"] = beautiful.color.red },
-    [50]  = {["up"] = beautiful.color.yellow, ["down"] = beautiful.color.orange },
-    [75]  = {["up"] = beautiful.color.orange, ["down"] = beautiful.color.yellow },
-    [100] = {["up"] = beautiful.color.red,    ["down"] = beautiful.fg_normal },
+    [25]  = { up = beautiful.fg_normal,    down = beautiful.color.red    },
+    [50]  = { up = beautiful.color.yellow, down = beautiful.color.orange },
+    [75]  = { up = beautiful.color.orange, down = beautiful.color.yellow },
+    [100] = { up = beautiful.color.red,    down = beautiful.fg_normal    },
   }
   if pct <= 25 then
     return colors[25][dir]
@@ -267,10 +267,10 @@ end
 helpers.get_tuntap_ifaces = function()
 	local iface = {}
     for line in io.lines("/proc/net/dev") do
-        local dev = string.match(line, '%s+([tun|tap]-[%d]-):%s+')
-        if dev ~= nil then
-            table.insert(iface, dev)
-        end
+      local dev = string.match(line, '%s+([tun|tap]-[%d]-):%s+')
+      if dev ~= nil then
+        table.insert(iface, dev)
+      end
     end
 	return iface
 end
@@ -279,11 +279,10 @@ end
 helpers.get_active_ifaces = function()
     local iface = {}
     for line in io.lines("/proc/net/dev") do
-        local dev = string.match(line, '^%s-([en|sl|wl|ww|pp|et][%l%d+]+):%s+')
-        if dev ~= nil and dev ~= "lo" then
-            --iface[dev] = { ip = '' }
-             table.insert(iface, dev)
-        end
+      local dev = string.match(line, '^%s-([en|sl|wl|ww|pp|et][%l%d+]+):%s+')
+      if dev ~= nil and dev ~= "lo" then
+         table.insert(iface, dev)
+      end
     end
 	return iface
 end
@@ -293,18 +292,18 @@ helpers.get_touchpad_ids = function()
   local f
 	local ids = {}
     awful.spawn.with_line_callback("xinput list", {
-        stdout = function(line)
-            if string.find(line, "TouchPad") or string.find(line, "GlidePoint") then
-                table.insert(ids, string.match(line, '.*id=(%d+).'))
-                print("Touchpad id found :" .. string.match(line, '.*id=(%d+).') )
-            elseif string.find(line, 'Touchpad') then
-                table.insert(ids, string.match(line, '.*id=(%d+).'))
-                print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
-            elseif string.find(line, "Xephyr virtual mouse") then
-                table.insert(ids, string.match(line, '.*id=(%d+).'))
-                print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
-            end
+      stdout = function(line)
+        if string.find(line, "TouchPad") or string.find(line, "GlidePoint") then
+          table.insert(ids, string.match(line, '.*id=(%d+).'))
+          print("Touchpad id found :" .. string.match(line, '.*id=(%d+).') )
+      elseif string.find(line, 'Touchpad') then
+          table.insert(ids, string.match(line, '.*id=(%d+).'))
+          print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
+        elseif string.find(line, "Xephyr virtual mouse") then
+          table.insert(ids, string.match(line, '.*id=(%d+).'))
+          print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
         end
+      end
     })
 
     return ids
@@ -314,16 +313,16 @@ end
 helpers.get_stick_id = function()
     local id
 
-    awful.spawn.with_line_callback("xinput list", {
-        stdout = function(line)
-            if string.find(line,"Stick") then
-                id = string.match(line, 'id=(%d+).')
-			          print("Stick id is " .. id)
-            end
-        end
-    })
+  awful.spawn.with_line_callback("xinput list", {
+    stdout = function(line)
+      if string.find(line,"Stick") then
+        id = string.match(line, 'id=(%d+).')
+        print("Stick id is " .. id)
+      end
+    end
+  })
 
-    return id
+  return id
 end
 
 -- start a monitoring script and monitor its output
