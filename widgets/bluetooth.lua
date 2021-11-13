@@ -32,40 +32,63 @@ local buttons = function (screen)
   )
 end
 
-
 -- update widget
-local update_widget = function (widget, active)
+local update_widget = function (widget, info)
   local icon_name
   local status
 
-  if active then
+  local image_widget = widget:get_children_by_id("image")[1]
+  local text_widget = widget:get_children_by_id("text")[1]
+
+  if info.status == "UP" then
     icon_name = "bluetooth.svg"
     status = "on"
+    text_widget:set_markup('<span> ' .. info.device .. '</span>')
+    image_widget.tooltip.text = string.format(
+      "Bluetooth is %s\nDevice: %s\nName: %s\nMac: %s",
+      status, info.device, info.name, info.mac
+    )
   else
     icon_name = "bluetooth-off.svg"
     status = "off"
+    text_widget:set_markup('<span color="' .. beautiful.color.red .. '"> ' .. info.device .. '</span>')
+    image_widget.tooltip.text = string.format(
+      "Bluetooth is %s\nDevice: %s\nMac: %s",
+       status, info.device, info.mac
+    )
   end
 
-  widget.image = icons_path .. icon_name
-  widget.tooltip.text = "Bluetooth is " .. status
+  image_widget.image = icons_path .. icon_name
+
 end
 
 
 -- create widget instance
 local create_widget = function (screen)
-  local widget = wibox.widget {
-    image = icons_path .. "bluetooth.svg",
-    widget = wibox.widget.imagebox,
+  local widget = wibox.widget{
+    {
+      id = "image",
+      image = icons_path .. "bluetooth.svg",
+      widget = wibox.widget.imagebox
+    },
+    {
+      id = "text",
+      widget = wibox.widget.textbox
+    },
+    id = "container",
+    layout = wibox.layout.fixed.horizontal,
   }
-  awesome.connect_signal("daemon::bluetooth::status", function (...)
+  local image_widget = widget:get_children_by_id("image")[1]
+
+  awesome.connect_signal("daemon::bluetooth::info", function (...)
     update_widget(widget, ...)
   end)
 
   local container = require("widgets.clickable_container")(widget)
   container:buttons(buttons(screen))
 
-  widget.tooltip = require("widgets.tooltip")({ container })
-  widget.tooltip.text = "Bluetooth status unknown"
+  image_widget.tooltip = require("widgets.tooltip")({ container })
+  image_widget.tooltip.text = "Bluetooth status unknown"
 
   return container
 end

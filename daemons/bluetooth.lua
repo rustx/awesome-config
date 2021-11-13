@@ -7,44 +7,48 @@
 --   bluez-utils
 --
 -- Signals:
--- daemon::bluetooth::status
+-- daemon::bluetooth::info
 --   active (boolean)
 --
 
 local awful = require("awful")
-local helpers = require("helpers")
+local gears = require("gears")
 
 -- ========================================
 -- Config
 -- ========================================
 
+-- update_interval
+local update_interval = 5
+
 -- script to check bluetooth status
-local check_script = "bluetoothctl list"
-
--- script to monitor bluetooth status
-local monitor_script = "bluetoothctl --monitor list"
-
+local check_script = "hciconfig -a"
 
 -- ========================================
 -- Logic
 -- ========================================
 
 -- Main script
-local check_bluetooth = function (stdout)
-  local active = stdout:match("Controller") ~= nil
-
-  awesome.emit_signal("daemon::bluetooth::status", active)
+local emit_bluetooth_info = function ()
+  awful.spawn.easy_async_with_shell(check_script, function (stdout)
+    local info = {
+      device = string.match(stdout, "^hci[%d]"),
+      mac = string.match(stdout, "BD Address: ([%x+:?]+)"),
+      status = string.match(stdout, "(DOWN)") or string.match(stdout,"(UP)"),
+      name = string.match(stdout, "Name: '(%a+-%d)'")
+    }
+    awesome.emit_signal("daemon::bluetooth::info", info)
+    awesome.emit_signal("daemon::bluetooth::status", info.status)
+  end)
 end
-
 
 -- ========================================
 -- Initialization
 -- ========================================
 
--- Run once to initialize widgets
-awful.spawn.easy_async_with_shell(check_script, function (stdout)
-  check_bluetooth(stdout)
-end)
-
--- Start monitoring process
-helpers.start_monitor(monitor_script, { stdout = check_bluetooth })
+gears.timer {
+  timeout = update_interval,
+  autostart = true,
+  call_now = true,
+  callback = emit_bluetooth_info,
+}
