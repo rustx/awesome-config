@@ -175,8 +175,8 @@ helpers.https_request = function(host, url, user, pass)
     method = "GET",
     url = host .. url,
     headers = {
-        ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
-        ["Content-Type"] = "application/json"
+      ["Authorization"] = "Basic " .. (mime.b64(user .. ":" .. pass)),
+      ["Content-Type"] = "application/json"
     },
     sink = ltn12.sink.table(resp)
   }
@@ -450,12 +450,10 @@ end
 -- switch language
 helpers.switch_language = function ()
   awful.spawn.easy_async_with_shell("ibus engine", function (stdout)
-    local curr_index = helpers
-      .get_language_map_index("engine", stdout:gsub("%s+", ""))
+    local curr_index = helpers.get_language_map_index("engine", stdout:gsub("%s+", ""))
 
     local next_index = curr_index == #Languages and 1 or curr_index + 1
     local next_language = Languages[next_index].lang
-
     helpers.set_language(next_language)
   end)
 end

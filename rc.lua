@@ -38,7 +38,7 @@ Network_Interfaces = {
 -- language mappings
 Languages = {
   { lang = "en", engine = "xkb:us::eng" },
-  { lang = "fr", engine = "xkb:fr::fr" },
+  { lang = "fr", engine = "xkb:fr::fra" },
 }
 
 -- Crypto coins
@@ -77,10 +77,8 @@ Tags = {
 
 -- run these commands at startup
 local startup_scripts = {
-  -- Remap modifier keys when pressed alone
-  --"xcape -e 'Control_L=Escape;Super_L=Hangul_Hanja;Super_R=Hangul'",
-  ---- Other key remappings
-  --"xmodmap $HOME/.Xmodmap",
+  -- Compose key remappings
+  "xmodmap $HOME/.Xmodmap",
   -- Faster key repeat response
   --"xset r rate 200 30",
   -- Compositor

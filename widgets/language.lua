@@ -40,19 +40,28 @@ end
 
 -- update language icon
 local update_language_icon = function (widget, language)
-  widget.image = icons_path .. language .. ".svg"
+  local image_widget = widget:get_children_by_id("image")[1]
+  local text_widget = widget:get_children_by_id("text")[1]
 
-  widget.tooltip.text = language == "unknown"
-    and "Keyboard layout unknown"
-    or  "Keyboard layout is set to " .. language
+  image_widget.image = icons_path .. language .. ".svg"
+  text_widget:set_markup(' ' .. language)
 end
 
 
 -- create widget instance
 local create_widget = function (screen)
-  local widget = wibox.widget {
-    image = icons_path .. "unknown.svg",
-    widget = wibox.widget.imagebox,
+  local widget = wibox.widget{
+    {
+      id = "image",
+      image = icons_path .. "unknown.svg",
+      widget = wibox.widget.imagebox
+    },
+    {
+      id = "text",
+      widget = wibox.widget.textbox
+    },
+    id = "container",
+    layout = wibox.layout.fixed.horizontal,
   }
   awesome.connect_signal("daemon::language", function (...)
     update_language_icon(widget, ...)
@@ -60,9 +69,6 @@ local create_widget = function (screen)
 
   local container = require("widgets.clickable_container")(widget)
   container:buttons(buttons(screen))
-
-  widget.tooltip = require("widgets.tooltip")({ container })
-  widget.tooltip.text = "Keyboard layout unknown"
 
   return container
 end
