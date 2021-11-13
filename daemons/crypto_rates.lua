@@ -42,7 +42,7 @@ local monitor_script = "curl -s \""  .. currency_host .. build_price_url(coins_l
 local emit_currency_rates = function ()
   awful.spawn.easy_async_with_shell(monitor_script, function (stdout)
     local rates = json.decode(stdout)
-    awesome.emit_signal("daemon::crypto::rates", rates)
+      awesome.emit_signal("daemon::crypto::rates", rates)
   end)
 end
 
@@ -54,5 +54,5 @@ gears.timer {
   timeout = update_interval,
   autostart = true,
   call_now = true,
-  callback = emit_currency_rates(),
+  callback = emit_currency_rates,
 }

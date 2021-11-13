@@ -30,7 +30,6 @@ local monitor_script = "curl -s http://ipinfo.io/ip"
 local emit_wanip_address = function ()
   awful.spawn.easy_async_with_shell(monitor_script, function (stdout)
     local address = stdout
-
     awesome.emit_signal("daemon::wanip::address", address)
   end)
 end

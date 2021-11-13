@@ -19,7 +19,6 @@ local helpers = require("helpers")
 -- Icons path
 local icons_path = beautiful.icons_path .. "network/"
 
-
 -- ========================================
 -- Definition
 -- ========================================

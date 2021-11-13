@@ -207,7 +207,6 @@ helpers.http_request = function(host, url, user, pass)
   end
 end
 
-
 -- get main process name
 helpers.get_main_process_name = function (cmd)
   -- remove whitespace

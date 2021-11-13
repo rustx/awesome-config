@@ -214,13 +214,14 @@ local rules = {
         "mocp_widget",
         "Blender",
         "Sonata",
-        "Inkscape"
+        "Inkscape",
       },
       name = {
         "Zoom",
         "EasyTAG",
         "mocp",
-        "inkscape"
+        "inkscape",
+        "ncmpcpp 0.8.2"
       }
     },
     properties = {
