@@ -62,7 +62,6 @@ local update_widget_percentage = function (widget, percentage)
   end
 
   image_widget.image = icons_path .. icon_name .. ".svg"
-  image_widget.tooltip.text = string.format("Volume is at %s%%", percentage)
 
   text_widget:set_markup(
     '<span color="' .. helpers.get_pct_color(percentage, "down") .. '"> ' .. percentage .. '%</span>'
@@ -76,7 +75,6 @@ local update_widget_mute = function (widget)
   local text_widget = widget:get_children_by_id("text")[1]
 
   image_widget.image = icons_path .. "volume_muted.svg"
-  image_widget.tooltip.text = "Volume is muted"
 
   text_widget:set_markup(' -/-')
 end
@@ -99,8 +97,6 @@ local create_widget = function (screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  local image_widget = widget:get_children_by_id("image")[1]
-
   awesome.connect_signal("daemon::volume::percentage", function (...)
     update_widget_percentage(widget, ...)
   end)
@@ -110,9 +106,6 @@ local create_widget = function (screen)
 
   local container = require("widgets.clickable_container")(widget)
   container:buttons(buttons(screen))
-
-  image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Volume status unknown"
 
   return container
 end

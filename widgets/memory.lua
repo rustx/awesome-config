@@ -34,7 +34,6 @@ local create_widget = function (screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
 
   vicious.cache(vicious.widgets.mem)
@@ -51,9 +50,6 @@ local create_widget = function (screen)
   )
 
   local container = require("widgets.clickable_container")(widget)
-
-  image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Memory Usage"
 
   return container
 end

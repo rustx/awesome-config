@@ -44,7 +44,6 @@ local create_widget = function (screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
 
   local base = " [%s] ${%s used_p}%%"
@@ -58,9 +57,6 @@ local create_widget = function (screen)
   vicious.register(text_widget, vicious.widgets.fs, display, 59)
 
   local container = require("widgets.clickable_container")(widget)
-
-  image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Fs usage"
 
   return container
 end

@@ -111,10 +111,6 @@ end
 
 -- create widget instance
 local create_widget = function (screen)
-  --local widget = wibox.widget {
-  --  image = icons_path .. 'loading.svg',
-  --  widget = wibox.widget.imagebox,
-  --}
   local widget = wibox.widget{
     {
       id = "image",

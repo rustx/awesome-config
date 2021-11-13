@@ -33,7 +33,6 @@ local update_widget = function (widget, address)
   end
 
   image_widget.image = icons_path .. icon_name .. ".svg"
-  image_widget.tooltip.text = string.format("Wanip is %s", address)
 end
 
 local create_widget = function(screen)
@@ -50,16 +49,12 @@ local create_widget = function(screen)
     id = "container",
     layout = wibox.layout.fixed.horizontal,
   }
-  local image_widget = widget:get_children_by_id("image")[1]
 
   awesome.connect_signal("daemon::wanip::address", function (...)
     update_widget(widget, ...)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-
-  image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Wanip unknown"
 
   return container
 end

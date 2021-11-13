@@ -17,7 +17,7 @@ local icons_path = beautiful.icons_path .. "crypto/"
 -- Definition
 -- ========================================
 
--- update wanip widget
+-- update crypto_rates widget
 local update_widget = function (widget, rates, coin)
   
   local image_widget = widget:get_children_by_id("image")[1]
@@ -25,10 +25,8 @@ local update_widget = function (widget, rates, coin)
 
   if rates ~= nil then
     text_widget:set_markup(' ' .. rates[coin]["usd"] .. ' $')
-    image_widget.tooltip.text = string.format(coin .. " : %s $", rates[coin]["usd"])
   else
     text_widget:set_markup(' N/A ')
-    image_widget.tooltip.text = 'Crypto rates unknown'
   end
 
   image_widget.image = icons_path .. coin .. ".svg"
@@ -48,19 +46,12 @@ local create_widget = function(screen, coin)
     id = "container",
     layout = wibox.layout.fixed.horizontal,
   }
-  local image_widget = widget:get_children_by_id("image")[1]
-  local text_widget = widget:get_children_by_id("text")[1]
 
   awesome.connect_signal("daemon::crypto::rates", function (...)
     update_widget(widget, ..., coin)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-
-  image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Crypto rates unknown"
-
-  text_widget:set_markup(' N/A')
 
   return container
 end

@@ -61,7 +61,6 @@ local update_widget = function (widget, percentage)
   end
 
   image_widget.image = icons_path .. icon_name .. ".svg"
-  image_widget.tooltip.text = string.format("Brightness is at %s%%", percentage)
   text_widget:set_markup(
     '<span color="' .. helpers.get_pct_color(percentage, "down") .. '"> ' .. percentage .. '%</span>'
   )
@@ -83,17 +82,12 @@ local create_widget = function (screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  local image_widget = widget:get_children_by_id("image")[1]
-
   awesome.connect_signal("daemon::brightness::percentage", function (...)
     update_widget(widget, ...)
   end)
 
   local container = require("widgets.clickable_container")(widget)
   container:buttons(buttons(screen))
-
-  image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Brightness status unknown"
 
   return container
 end

@@ -6,7 +6,6 @@
 local vicious = require("vicious")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local helpers = require("helpers")
 
 local icons_path = beautiful.icons_path .. "network/"
 
@@ -38,13 +37,10 @@ local create_widget = function (screen)
     vicious.widgets.net,
     " ${" .. iface .. " up_mb} MB - ${" .. iface .. " down_mb} MB ",
     2,
-    "wlp58s0"
+    iface
   )
 
   local container = require("widgets.clickable_container")(widget)
-
-  widget.tooltip = require("widgets.tooltip")({ container })
-  widget.tooltip.text = "Net usage"
 
   return container
 end
