@@ -20,7 +20,7 @@ local helpers = require("helpers")
 
 -- script to monitor player events
 -- Sleeps until player changes state
-local monitor_script = [[ playerctl metadata --follow --format ]]
+local monitor_script = [[playerctl metadata --follow --format ]]
   .. '"<a>{{playerName}}</a><b>{{artist}}</b><c>{{title}}</c><d>{{status}}</d>"'
 
 

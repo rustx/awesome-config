@@ -17,7 +17,7 @@ local json = require("json")
 -- Config
 -- ========================================
 
-local update_interval = 10
+local update_interval = 33
 
 local coins_list = Coins
 local currency_host = 'https://api.coingecko.com'
@@ -49,6 +49,14 @@ end
 -- ========================================
 -- Initialization
 -- ========================================
+
+---- Run once to initialize widgets
+--awful.spawn.easy_async_with_shell(check_script, function (stdout)
+--  print("Stdout" .. stdout)
+--  check_bluetooth(stdout)
+--end)
+
+emit_currency_rates()
 
 gears.timer {
   timeout = update_interval,
