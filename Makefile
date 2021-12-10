@@ -47,16 +47,20 @@ git_config:
         echo -e "* gtkr-3.0 directory  already exists" \
     fi
 
+xmodmap:
+	echo "keycode 108 = Multi_key Alt_R Meta_R Alt_R Meta_R" > $HOME/.Xmodmap
 
 apt_deps:
-	sudo apt-get update && install -y compton xsel python-pip gtk2-engines-murrine gtk2-engines-pixbuf
+	sudo apt-get update && install -y compton xsel python-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
+	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev \
+	lua-sec lua-socket lua-http lua-json lua-cjson
 
 pip_deps: apt-deps
 	pip installl powerline-shell
 
 start_xephyr:
 	if ! pgrep Xephyr; then \
-		Xephyr -ac -br -noreset -screen 1200x800 :2 & \
+		DISPLAY=:0 Xephyr -ac -br -noreset -screen 1200x800 :2 & \
 	fi
 
 stop_xephyr:
