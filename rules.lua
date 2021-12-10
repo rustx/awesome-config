@@ -264,10 +264,11 @@ local rules = {
     rule_any = {
       name = {
         "Steam",
-
+        "binance"
       },
       class = {
-        "steam"
+        "steam",
+        "Binance"
       }
     },
     properties = {

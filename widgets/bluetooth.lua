@@ -51,7 +51,7 @@ local update_widget = function (widget, info)
   else
     icon_name = "bluetooth-off.svg"
     status = "off"
-    text_widget:set_markup('<span color="' .. beautiful.color.red .. '"> ' .. info.device .. '</span>')
+    text_widget:set_markup('<span color="' .. beautiful.color.red .. '"> ' .. info.device and info.device or "N/A".. '</span>')
     image_widget.tooltip.text = string.format(
       "Bluetooth is %s\nDevice: %s\nMac: %s",
        status, info.device, info.mac

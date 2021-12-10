@@ -31,8 +31,8 @@ Apps = {
 -- network interfaces
 local ifaces = helpers.get_active_ifaces()
 Network_Interfaces = {
-  wlan = string.match(table.concat(ifaces, " "), "^wl[%l%d+]+" ),
-  lan  = string.match(table.concat(ifaces, " "), "^en[%l%d+]+" ),
+  wlan = string.match(table.concat(ifaces, " "), "wl[%l%d+]+" ),
+  lan  = string.match(table.concat(ifaces, " "), "en[%l%d+]+" ),
 }
 
 -- language mappings
