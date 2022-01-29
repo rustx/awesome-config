@@ -48,10 +48,10 @@ git_config:
     fi
 
 xmodmap:
-	echo "keycode 108 = Multi_key Alt_R Meta_R Alt_R Meta_R" > $HOME/.Xmodmap
+	echo "keycode 108 = Multi_key Alt_R Meta_R Alt_R Meta_R" > $(HOME)/.Xmodmap
 
 apt_deps:
-	sudo apt-get update && install -y compton xsel python-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
+	sudo apt-get update && sudo apt-get install -y compton xsel xclip python3-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
 	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev \
 	lua-sec lua-socket lua-http lua-json lua-cjson
 

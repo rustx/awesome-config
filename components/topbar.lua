@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 awful.screen.connect_for_each_screen(function(s)
   --s.quake = quake({ app = awful.util.terminal, followtag = true, name = 'Quake' })
   s.promptbox = awful.widget.prompt()
+
   s.topbar = awful.wibar({
     screen = s,
     visible = true,
@@ -65,7 +66,7 @@ awful.screen.connect_for_each_screen(function(s)
         beautiful.arrl_ld,
         wibox.container.background(require("widgets.calendar")(s), beautiful.color.darkgrey),
         beautiful.arrl_dl,
-        require("widgets.layout")(s),
+        require("widgets.layout")(s)
       },
     },
   }
