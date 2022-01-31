@@ -143,9 +143,9 @@ require("components")
 -- ========================================
 
 -- Each screen has its own specific tag table.
---awful.screen.connect_for_each_screen(function(s)
---  helpers.dynamic_tags(s)
---end)
+awful.screen.connect_for_each_screen(function(s)
+  helpers.dynamic_tags(s)
+end)
 
 awful.screen.disconnect_for_each_screen(function(s)
   helpers.dynamic_tags(s)
