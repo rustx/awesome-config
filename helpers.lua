@@ -280,7 +280,7 @@ helpers.get_active_ifaces = function()
     for line in io.lines("/proc/net/dev") do
       local dev = string.match(line, '^%s-([en|sl|wl|ww|pp|et][%l%d+]+):%s+')
       if dev ~= nil and dev ~= "lo" then
-         table.insert(iface, dev)
+        table.insert(iface, dev)
       end
     end
 	return iface
