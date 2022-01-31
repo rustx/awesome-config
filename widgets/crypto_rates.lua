@@ -24,7 +24,7 @@ local update_widget = function (widget, rates, coin)
   local text_widget = widget:get_children_by_id("text")[1]
 
   if rates ~= nil then
-    text_widget:set_markup(' ' .. rates[coin]["usd"] .. ' $')
+    text_widget:set_markup(' $' .. rates[coin]["usd"] .. ' ')
   else
     text_widget:set_markup(' N/A ')
   end

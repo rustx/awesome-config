@@ -60,7 +60,7 @@ pip_deps: apt-deps
 
 start_xephyr:
 	if ! pgrep Xephyr; then \
-		DISPLAY=:0 Xephyr -ac -br -noreset -screen 1200x800 :2 & \
+		Xephyr -ac -br -noreset -screen 1200x800 :2 & \
 	fi
 
 stop_xephyr:

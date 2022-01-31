@@ -28,6 +28,16 @@ local buttons = function (screen)
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
+      function()
+				if volume_slider:get_value() > 100 then
+					volume_slider:set_value(100)
+					return
+				end
+				volume_slider:set_value(volume_slider:get_value() + 5)
+			end
+    ),
+    awful.button(
+      {}, keys.middleclick,
       function() awful.spawn(Apps.volume_manager) end
     ),
     awful.button(

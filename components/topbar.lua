@@ -5,10 +5,12 @@
 
 local awful = require("awful")
 local wibox = require("wibox")
+local helpers = require("helpers")
 local beautiful = require("beautiful")
 
 awful.screen.connect_for_each_screen(function(s)
   --s.quake = quake({ app = awful.util.terminal, followtag = true, name = 'Quake' })
+  s.tags = helpers.dynamic_tags(s)
   s.promptbox = awful.widget.prompt()
 
   s.topbar = awful.wibar({

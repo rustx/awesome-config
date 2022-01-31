@@ -3,11 +3,9 @@
 -- display currently active layout
 --
 
-local wibox = require("wibox")
 local awful = require("awful")
 local gears = require("gears")
 local keys = require("keys")
-local beautiful = require("beautiful")
 
 -- define buttons
 local buttons = function (s)

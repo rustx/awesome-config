@@ -335,13 +335,17 @@ keys.globalkeys = gears.table.join(
   -- ========================================
   awful.key(
     { modkey, ctrlkey }, "n",
-    function () awful.screen.focus_relative(1) end,
+    function ()
+			awful.screen.focus_relative(1)
+		end,
     { description = "focus next screen", group = "screen" }
   ),
 
   awful.key(
     { modkey, ctrlkey }, "m",
-    function () awful.screen.focus_relative(-1) end,
+    function ()
+			awful.screen.focus_relative(-1)
+		end,
     { description = "focus previous screen", group = "screen" }
   ),
 

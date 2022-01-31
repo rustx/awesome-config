@@ -31,8 +31,7 @@ Apps = {
 -- network interfaces
 local ifaces = helpers.get_active_ifaces()
 Network_Interfaces = {
---  wlan = string.match(table.concat(ifaces, " "), "^wl[%l%d+]+" ),
-  wlan  = "wlo1",
+  wlan = string.match(table.concat(ifaces, " "), "^wl[%l%d+]+" ),
   lan  = string.match(table.concat(ifaces, " "), "^en[%l%d+]+" ),
 }
 
@@ -144,9 +143,9 @@ require("components")
 -- ========================================
 
 -- Each screen has its own specific tag table.
-awful.screen.connect_for_each_screen(function(s)
-  helpers.dynamic_tags(s)
-end)
+--awful.screen.connect_for_each_screen(function(s)
+--  helpers.dynamic_tags(s)
+--end)
 
 awful.screen.disconnect_for_each_screen(function(s)
   helpers.dynamic_tags(s)
