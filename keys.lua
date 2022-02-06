@@ -511,7 +511,7 @@ keys.globalkeys = gears.table.join(
 
   awful.key(
     { modkey, }, "z",
-    function ()  quake:toggle()  end,
+    function ()  awful.screen.focused().quake:toggle()  end,
     { description = "dropdown application", group = "applications"}
   ),
 
