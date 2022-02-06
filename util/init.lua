@@ -4,3 +4,4 @@
 --
 
 require("util.quake")
+require("util.xrandr")

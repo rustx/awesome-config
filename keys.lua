@@ -10,6 +10,7 @@ local beautiful     = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local helpers       = require("helpers")
 local switcher      = require("components/screen_switcher")
+local xrandr        = require("util.xrandr")
 
 local dpi = beautiful.xresources.apply_dpi
 
@@ -347,6 +348,14 @@ keys.globalkeys = gears.table.join(
       awful.screen.focus_relative(-1)
     end,
     { description = "focus previous screen", group = "screen" }
+  ),
+
+  awful.key(
+    { modkey,}, "s",
+    function ()
+      xrandr.xrandr()
+    end,
+    { description = "change xrandr layout", group = "screen" }
   ),
 
   -- ========================================
