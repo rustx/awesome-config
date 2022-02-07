@@ -3,125 +3,103 @@
 -- tasklist component
 --
 
-local awful = require('awful')
-local wibox = require('wibox')
-local gears = require('gears')
-local beautiful = require("beautiful")
+local wibox = require("wibox")
+local awful = require("awful")
+local gears = require("gears")
 
-local keys = require("keys")
-
--- define tasklist buttons
-local buttons = function (screen)
-  return gears.table.join(
-    -- Restore minimized
-    awful.button(
-      {}, keys.leftclick,
-      function ()
-        local c = awful.client.restore()
-        if c then client.focus = c end
-      end
-    ),
-
-    -- Close
-    awful.button(
-      {}, keys.midclick,
-      function ()
-        if client.focus ~= nil then client.focus:kill() end
-      end
-    ),
-
-    -- Minimize
-    awful.button(
-      {}, keys.rightclick,
-      function ()
-        if client.focus ~= nil then client.focus.minimized = true end
-      end
-    ),
-
-    -- Cycle clients
-    awful.button(
-      {}, keys.scrollup,
-      function () awful.client.focus.byidx(-1) end
-    ),
-    awful.button(
-      {}, keys.scrolldown,
-      function () awful.client.focus.byidx(1) end
-    )
-  )
-end
-
--- get minimized clients
-local get_minimized_clients = function (screen)
-  local clients = {}
-
-  for _, c in ipairs(screen.clients) do
-    if not (
-      c.skip_taskbar
-      or c.hidden
-      or c.type == "splash"
-      or c.type == "dock"
-      or c.type == "desktop"
-    ) and c.minimized
-    and awful.widget.tasklist.filter.currenttags(c, awful.screen.focused()) then
-      table.insert(clients, c)
-    end
+-- update currently focused client name
+local update_widget = function(widget)
+  local c = client.focus
+  if c ~= nil then
+    widget.text = c.name or c.class or ""
+  else
+    widget.text = ""
   end
-
-  return clients
 end
 
--- get hidden/visible client counts
-local get_clients_status = function (screen)
-  local visible_clients = screen.clients
-  local hidden_clients  = get_minimized_clients(screen)
-  print(string.format("%s %s %s %s",
-    beautiful.tasklist_icon_visible,
-    #visible_clients,
-    beautiful.tasklist_icon_hidden,
-    #hidden_clients))
-  return string.format(
-    "%s %s %s %s",
-    beautiful.tasklist_icon_visible,
-    #visible_clients,
-    beautiful.tasklist_icon_hidden,
-    #hidden_clients
-  )
-end
+local tasklist_buttons = gears.table.join(
+  awful.button({ }, 1, function(c)
+    if c == client.focus then
+      c.minimized = true
+    else
+      c:emit_signal(
+        "request::activate",
+        "tasklist",
+        { raise = true }
+      )
+    end
+  end),
+  awful.button({ }, 3, function()
+    awful.menu.client_list({ theme = { width = 250 } })
+  end),
+  awful.button({ }, 4, function()
+    awful.client.focus.byidx(1)
+  end),
+  awful.button({ }, 5, function()
+    awful.client.focus.byidx(-1)
+  end))
 
--- update widget info
-local update_widget = function (widget, screen)
-  widget.markup = get_clients_status(screen)
-end
+-- create client_name widget instance
+local create_widget = function(screen, cr)
+  local widget = awful.widget.tasklist {
+    screen = screen,
+    filter = awful.widget.tasklist.filter.currenttags,
+    buttons = tasklist_buttons,
+    layout = {
+      spacing = 10,
+      spacing_widget = {
+        {
+          forced_width = 12,
+          shape = gears.shape.powerline,
+          color = '#777aaa',
+          widget = wibox.widget.separator
+        },
+        valign = 'center',
+        halign = 'center',
+        widget = wibox.container.place,
+      },
+      layout = wibox.layout.flex.horizontal
+    },
 
--- create taglist widget instance
-local create_widget = function (screen)
-  local widget = wibox.widget {
-    widget = wibox.widget.textbox,
-    text = "tasklist_widget",
-    valign = "center",
-    align = "center",
+    widget_template = {
+      {
+        wibox.widget.base.make_widget(),
+        id = 'background_role',
+        widget = wibox.container.background,
+      },
+      {
+        {
+          id = 'clienticon_role',
+          widget = awful.widget.clienticon,
+        },
+        margins = 3,
+        widget = wibox.container.margin
+      },
+      nil,
+      create_callback = function(self, c, index, objects) --luacheck: no unused args
+        self:get_children_by_id('clienticon_role')[1].client = c
+      end,
+      layout = wibox.layout.align.vertical,
+      {
+        id = 'text_role',
+        widget = wibox.widget.textbox,
+      },
+      margin = 5,
+      layout = wibox.layout.fixed.horizontal,
+    },
   }
 
-  local container = require("widgets.container")(widget)
-
-  client.connect_signal("unmanage", function (c)
-    update_widget(widget, screen)
+  client.connect_signal("focus", function(c)
+    update_widget(widget)
   end)
-  client.connect_signal("manage", function (c)
-    update_widget(widget, screen)
+  client.connect_signal("unfocus", function(c)
+    update_widget(widget)
   end)
-  client.connect_signal("untagged", function (c)
-    update_widget(widget, screen)
-  end)
-  client.connect_signal("property::minimized", function (c)
-    update_widget(widget, screen)
-  end)
-  awful.tag.attached_connect_signal(s, "property::selected", function ()
-    update_widget(widget, screen)
+  client.connect_signal("property::name", function(c)
+    update_widget(widget)
   end)
 
-  return container
+  return widget
 end
 
 return create_widget
-

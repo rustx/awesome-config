@@ -9,7 +9,7 @@ local naughty       = require("naughty")
 local beautiful     = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local helpers       = require("helpers")
-local switcher      = require("components/screen_switcher")
+local switcher      = require("components.screen_switcher")
 local xrandr        = require("util.xrandr")
 
 local dpi = beautiful.xresources.apply_dpi
@@ -282,12 +282,6 @@ keys.globalkeys = gears.table.join(
     function ()
       switcher.switch( 1, "Mod1", "Alt_L", "Shift", "Tab")
     end
-  ),
-
-  awful.key(
-    { modkey }, "Tab",
-    function () awful.screen.focused().window_switcher:show() end,
-    {description = "activate window switcher", group = "awesome"}
   ),
 
   awful.key(
