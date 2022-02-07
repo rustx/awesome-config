@@ -134,18 +134,6 @@ theme.lock_screen_dot_size    = dpi(20)
 
 theme.lock_screen_warning_icon = theme.lock_screen_icons_path .. "lock_screen_warning.svg"
 
--- Window switcher
-theme.window_switcher_bg       = theme.bg_normal .. "aa"
-theme.window_switcher_margin_x = dpi(20)
-theme.window_switcher_margin_y = dpi(25)
-theme.window_switcher_width    = dpi(500)
-
-theme.window_switcher_spacing_x = dpi(7)
-theme.window_switcher_spacing_y = dpi(15)
-
-theme.window_switcher_icon_height  = dpi(15)
-theme.window_switcher_icon_width   = dpi(15)
-
 -- Screen switcher
 theme.screen_switcher_bg = theme.bg_normal .. "aa"
 

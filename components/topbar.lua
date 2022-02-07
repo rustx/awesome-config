@@ -35,7 +35,7 @@ awful.screen.connect_for_each_screen(function(s)
         require("widgets.taglist")(s),
         beautiful.arrr_ld,
         s.promptbox,
-        wibox.container.background(require("widgets.client_name")(s), beautiful.color.darkgrey),
+        wibox.container.background(require("widgets.tasklist")(s), beautiful.color.darkgrey),
         beautiful.arrr_dl
       },
 
