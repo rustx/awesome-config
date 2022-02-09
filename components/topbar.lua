@@ -5,7 +5,7 @@
 
 local awful = require("awful")
 local wibox = require("wibox")
-local quake = require("util.quake")
+local quake = require("components.quake")
 local beautiful = require("beautiful")
 
 awful.screen.connect_for_each_screen(function(s)

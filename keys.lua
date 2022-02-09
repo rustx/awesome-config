@@ -10,7 +10,7 @@ local beautiful     = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local helpers       = require("helpers")
 local switcher      = require("components.screen_switcher")
-local xrandr        = require("util.xrandr")
+local xrandr        = require("components.xrandr")
 
 local dpi = beautiful.xresources.apply_dpi
 
