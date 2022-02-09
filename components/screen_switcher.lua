@@ -1,23 +1,16 @@
 local cairo = require("lgi").cairo
-local mouse = mouse
-local screen = screen
 local wibox = require('wibox')
-local table = table
-local keygrabber = keygrabber
 local math = require('math')
-local awful = require('awful')
 local gears = require("gears")
-local timer = gears.timer
 local beautiful = require("beautiful")
-local client = client
+local awful = require('awful')
 awful.client = require('awful.client')
 
-local naughty = require("naughty")
-local string = string
-local tostring = tostring
-local tonumber = tonumber
-local debug = debug
-local pairs = pairs
+local timer = gears.timer
+local client = client
+local mouse = mouse
+local screen = screen
+local keygrabber = keygrabber
 local unpack = unpack or table.unpack
 
 local surface = cairo.ImageSurface(cairo.Format.RGB24,20,20)
