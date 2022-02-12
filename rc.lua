@@ -43,8 +43,17 @@ Languages = {
 
 -- Crypto coins
 Coins = {
-  "bitcoin",
-  "ethereum",
+  rates = {
+    "bitcoin",
+    "ethereum",
+    "cosmos",
+    "matic-network",
+    "tezos"
+  },
+  currency = {
+    name = "eur",
+    symbol = "€"
+  }
 }
 
 -- layouts
@@ -101,8 +110,6 @@ local startup_scripts = {
   "blueman-applet",
   -- Start thunar daemon
   "thunar --daemon",
-  -- Start protonvpn
-  --"protonvpn",
   -- Start xscreensaver
   "xscreensaver"
 }

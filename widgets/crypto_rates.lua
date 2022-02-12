@@ -19,12 +19,12 @@ local icons_path = beautiful.icons_path .. "crypto/"
 
 -- update crypto_rates widget
 local update_widget = function (widget, rates, coin)
-  
+
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
 
   if rates ~= nil then
-    text_widget:set_markup(' $' .. rates[coin]["usd"] .. ' ')
+    text_widget:set_markup(' ' .. Coins.currency.symbol .. rates[coin][Coins.currency.name] .. ' ')
   else
     text_widget:set_markup(' N/A ')
   end

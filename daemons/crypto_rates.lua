@@ -19,7 +19,8 @@ local json = require("json")
 
 local update_interval = 33
 
-local coins_list = Coins
+local coins_list = Coins.rates
+local coins_currency = Coins.currency.name
 local currency_host = 'https://api.coingecko.com'
 
 local build_price_url = function(coins_list)
@@ -27,7 +28,7 @@ local build_price_url = function(coins_list)
   for _, coin in pairs(coins_list) do
     price_url = price_url .. coin ..  ','
   end
-  return price_url:sub(1,-2) .. '&vs_currencies=usd'
+  return price_url:sub(1,-2) .. '&vs_currencies=' .. coins_currency
 end
 
 -- script to retrieve crypto rates

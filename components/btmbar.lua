@@ -34,6 +34,11 @@ awful.screen.connect_for_each_screen(function (s)
         beautiful.arrr_ld,
         wibox.container.background(require("widgets.crypto_rates")(s, "ethereum"), beautiful.color.darkgrey),
         beautiful.arrr_dl,
+        require("widgets.crypto_rates")(s, "cosmos"),
+        beautiful.arrr_ld,
+        wibox.container.background(require("widgets.crypto_rates")(s, "matic-network"), beautiful.color.darkgrey),
+        beautiful.arrr_dl,
+        require("widgets.crypto_rates")(s, "tezos"),
       },
 
       -- Middle widgets
