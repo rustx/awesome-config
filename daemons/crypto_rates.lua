@@ -28,7 +28,7 @@ local build_price_url = function(coins_list)
   for _, coin in pairs(coins_list) do
     price_url = price_url .. coin ..  ','
   end
-  return price_url:sub(1,-2) .. '&vs_currencies=' .. coins_currency
+  return price_url:sub(1,-2) .. '&vs_currencies=' .. coins_currency .. '&include_24hr_change=true&include_last_updated_at=true'
 end
 
 -- script to retrieve crypto rates
@@ -50,12 +50,6 @@ end
 -- ========================================
 -- Initialization
 -- ========================================
-
----- Run once to initialize widgets
---awful.spawn.easy_async_with_shell(check_script, function (stdout)
---  print("Stdout" .. stdout)
---  check_bluetooth(stdout)
---end)
 
 emit_currency_rates()
 

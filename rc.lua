@@ -48,7 +48,8 @@ Coins = {
     "ethereum",
     "cosmos",
     "matic-network",
-    "tezos"
+    "tezos",
+    "polkadot"
   },
   currency = {
     name = "eur",
@@ -227,6 +228,6 @@ end)
 -- Reload config when screen geometry change
 screen.connect_signal("property::geometry", awesome.restart)
 
--- Garbage collcetion for lower memory consumption
+-- Garbage collection for lower memory consumption
 collectgarbage("setpause", 110)
 collectgarbage("setstepmul", 1000)

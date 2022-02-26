@@ -138,13 +138,11 @@ local rules = {
         "jetbrains-pycharm",
         "jetbrains-pycharm-ce",
         "jetbrains-goland",
-        "jetbrains-idea-ce"
+        "jetbrains-idea-ce",
+        "jetbrains-idea",
       },
       name = {
-        "PyCharm",
-        "vim_ide",
-        "GoLand",
-        "Tip of the Day"
+        "vim_ide"
       }
     },
     properties = {

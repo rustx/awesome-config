@@ -39,6 +39,9 @@ awful.screen.connect_for_each_screen(function (s)
         wibox.container.background(require("widgets.crypto_rates")(s, "matic-network"), beautiful.color.darkgrey),
         beautiful.arrr_dl,
         require("widgets.crypto_rates")(s, "tezos"),
+        beautiful.arrr_ld,
+        wibox.container.background(require("widgets.crypto_rates")(s, "polkadot"), beautiful.color.darkgrey),
+        beautiful.arrr_dl,
       },
 
       -- Middle widgets

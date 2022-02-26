@@ -37,7 +37,6 @@ local buttons = function (screen)
   )
 end
 
-
 -- update language icon
 local update_language_icon = function (widget, language)
   local image_widget = widget:get_children_by_id("image")[1]
