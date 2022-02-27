@@ -108,12 +108,14 @@ theme.btmbar_height     = dpi(22)
 theme.btmbar_margin     = theme.useless_gap
 theme.btmmbar_padding_x = dpi(2)
 
+-- Promptbox
+theme.prompt_bg = color.darkgrey
+
 -- Exit screen
 theme.exit_screen_bg              = theme.bg_normal .. "aa"
 theme.exit_screen_button_spacing  = dpi(48)
 theme.exit_screen_caption_spacing = dpi(8)
 theme.exit_screen_icon_size       = dpi(48)
-
 
 -- Lock screen
 theme.lock_screen_icons_path = theme.icons_path .. "lock_screen/"

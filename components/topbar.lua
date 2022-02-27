@@ -8,66 +8,115 @@ local wibox = require("wibox")
 local quake = require("components.quake")
 local beautiful = require("beautiful")
 
+local left_widgets = {
+  "taglist",
+  "promptbox",
+  "tasklist"
+}
+
+local right_widgets = {
+  "cpu_usage",
+  "cpu_temp",
+  "memory",
+  "bluetooth",
+  "network",
+  "brightness",
+  "battery",
+  "systray",
+  "calendar",
+  "layout"
+}
+
+local build_right_widgets = function(s, widgets)
+  local bar = s.topbar:get_children_by_id('right')[1]
+  bar:add(beautiful.arrl_ld)
+  for i, wdg in pairs(widgets) do
+    if (i % 2 ~= 0) then
+      bar:add(
+        wibox.container.background(
+          require("widgets." .. wdg)(s),
+          beautiful.color.darkgrey
+        )
+      )
+      if i ~= #widgets then
+        bar:add(beautiful.arrl_dl)
+      end
+    else
+      bar:add(require("widgets." .. wdg)(s))
+      if i ~= #widgets then
+        bar:add(beautiful.arrl_ld)
+      end
+    end
+  end
+end
+
+local build_left_widgets = function(s, widgets)
+  local bar = s.topbar:get_children_by_id('left')[1]
+  for i, wdg in pairs(widgets) do
+    if (i % 2 ~= 0) then
+      if wdg == 'promptbox' then
+        bar:add(s.promptbox)
+      else
+        bar:add(require("widgets." .. wdg)(s))
+      end
+      if i ~= #widgets then
+        bar:add(beautiful.arrr_ld)
+      end
+    else
+      if wdg == 'promptbox' then
+        bar:add(
+          wibox.container.background(
+            s.promptbox,
+            beautiful.color.darkgrey
+          )
+        )
+      else
+        bar:add(
+          wibox.container.background(
+            require("widgets." .. wdg)(s),
+            beautiful.color.darkgrey
+          )
+        )
+      end
+      bar:add(beautiful.arrr_dl)
+    end
+  end
+end
+
 awful.screen.connect_for_each_screen(function(s)
   s.promptbox = awful.widget.prompt()
   s.quake = quake({ app = Apps.terminal, followtag = true, name = 'Quake' })
   s.topbar = awful.wibar({
     screen = s,
     visible = true,
-    --width = s.geometry.width - beautiful.topbar_margin * 4,
     height = beautiful.topbar_height,
     position = beautiful.topbar_position
   })
   s.topbar:struts {
-    top = beautiful.topbar_height + beautiful.topbar_margin * 2,
+    top = beautiful.topbar_height
   }
   s.topbar:setup {
     widget = wibox.container.margin,
-    left = beautiful.topbar_padding_x,
-    right = beautiful.topbar_padding_x,
     {
       layout = wibox.layout.align.horizontal,
       expand = "none",
-
       -- Left widgets
       {
+        id = 'left',
         layout = wibox.layout.fixed.horizontal,
-        require("widgets.taglist")(s),
-        beautiful.arrr_ld,
-        s.promptbox,
-        wibox.container.background(require("widgets.tasklist")(s), beautiful.color.darkgrey),
-        beautiful.arrr_dl
       },
-
       -- Middle widgets
       {
+        id = 'middle',
         layout = wibox.layout.fixed.horizontal,
       },
-
       -- Right widgets
       {
+        id = 'right',
         layout = wibox.layout.fixed.horizontal,
-        beautiful.arrl_ld,
-        wibox.container.background(require("widgets.cpu_usage")(s), beautiful.color.darkgrey),
-        beautiful.arrl_dl,
-        require("widgets.cpu_temp")(s),
-        beautiful.arrl_ld,
-        wibox.container.background(require("widgets.memory")(s), beautiful.color.darkgrey),
-        beautiful.arrl_dl,
-        require("widgets.bluetooth")(s),
-        beautiful.arrl_ld,
-        wibox.container.background(require("widgets.network")(s),beautiful.color.darkgrey),
-        beautiful.arrl_dl,
-        require("widgets.brightness")(s),
-        beautiful.arrl_ld,
-        wibox.container.background(require("widgets.battery")(s),beautiful.color.darkgrey),
-        beautiful.arrl_dl,
-        require("widgets.systray")(s),
-        beautiful.arrl_ld,
-        wibox.container.background(require("widgets.calendar")(s), beautiful.color.darkgrey),
-        beautiful.arrl_dl,
-        require("widgets.layout")(s)
       },
     },
   }
+  build_left_widgets(s, left_widgets)
+  build_right_widgets(s, right_widgets)
 end)
