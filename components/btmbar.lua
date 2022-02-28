@@ -51,7 +51,7 @@ local build_left_widgets = function(s, widgets)
         bar:add(beautiful.arrr_dl)
       else
         for idx, coin in pairs(Coins.rates) do
-          if (idx % 2 == 0) then
+          if (idx % 2 ~= 0) then
             bar:add(
               wibox.container.background(
                 require("widgets." .. wdg)(s, coin),
@@ -71,7 +71,7 @@ local build_left_widgets = function(s, widgets)
         bar:add(beautiful.arrr_dl)
       else
         for idx, coin in pairs(Coins.rates) do
-          if (idx % 2 == 0) then
+          if (idx % 2 ~= 0) then
             bar:add(require("widgets." .. wdg)(s, coin))
             bar:add(beautiful.arrr_ld)
           else

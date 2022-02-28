@@ -170,12 +170,10 @@ local rules = {
   -- Tag #5 [talk]
   {
     rule_any = {
-      name = {
-        "Slack"
-      },
       class = {
         "slack",
-        "discord"
+        "discord",
+        "telegram"
       }
     },
     properties = {

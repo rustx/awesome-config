@@ -46,11 +46,10 @@ Coins = {
   rates = {
     "bitcoin",
     "ethereum",
-    "monero",
     "cosmos",
     "polkadot",
     "tezos",
-    "matic-network"
+    "matic-network",
   },
   currency = {
     name = "eur",
