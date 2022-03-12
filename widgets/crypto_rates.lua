@@ -8,6 +8,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
 local keys = require("keys")
+local dpi = require("beautiful").xresources.apply_dpi
 
 -- ========================================
 -- Config
@@ -100,8 +101,8 @@ local create_widget = function(screen, coin)
     visible = false,
     opacity = 0.8,
     shape = gears.shape.rounded_rect,
-    maximum_width = 250,
-    maximum_height = 100,
+    maximum_width = dpi(250),
+    maximum_height = dpi(100),
     hide_on_right_click = true,
     preferred_anchors = 'middle',
     offset = { y = 1 },
@@ -112,12 +113,12 @@ local create_widget = function(screen, coin)
             {
               id = coin .. '_image',
               crypto_icon,
-              margins = 8,
+              margins = dpi(8),
               layout = wibox.container.margin
             },
             valign = 'center',
-            spacing = 8,
-            forced_width = 80,
+            spacing = dpi(8),
+            forced_width = dpi(80),
             layout = wibox.container.place
           },
           {
@@ -128,7 +129,7 @@ local create_widget = function(screen, coin)
                 align = 'center',
                 widget = wibox.widget.textbox
               },
-              margins = 8,
+              margins = dpi(8),
               layout = wibox.container.margin,
               {
                 id = coin .. '_trend',
@@ -136,7 +137,7 @@ local create_widget = function(screen, coin)
                 align = 'center',
                 widget = wibox.widget.textbox
               },
-              margins = 8,
+              margins = dpi(8),
               layout = wibox.container.margin,
               {
                 id = coin .. '_date',
@@ -144,8 +145,8 @@ local create_widget = function(screen, coin)
                 align = 'center',
                 widget = wibox.widget.textbox
               },
-              spacing = 8,
-              forced_width = 150,
+              spacing = dpi(8),
+              forced_width = dpi(150),
               layout = wibox.layout.flex.vertical
             },
             valign = 'center',

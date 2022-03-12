@@ -6,6 +6,8 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local gears = require("gears")
+local beautiful = require("beautiful")
+local dpi = require("beautiful").xresources.apply_dpi
 
 -- update currently focused client name
 local update_widget = function(widget)
@@ -46,12 +48,12 @@ local create_widget = function(screen, cr)
     filter = awful.widget.tasklist.filter.currenttags,
     buttons = tasklist_buttons,
     layout = {
-      spacing = 10,
+      spacing = dpi(10),
       spacing_widget = {
         {
-          forced_width = 12,
+          forced_width = dpi(12),
           shape = gears.shape.powerline,
-          color = '#777aaa',
+          color = beautiful.color.dark_grey,
           widget = wibox.widget.separator
         },
         valign = 'center',
@@ -72,7 +74,7 @@ local create_widget = function(screen, cr)
           id = 'clienticon_role',
           widget = awful.widget.clienticon,
         },
-        margins = 3,
+        margins = dpi(3),
         widget = wibox.container.margin
       },
       nil,
@@ -84,7 +86,7 @@ local create_widget = function(screen, cr)
         id = 'text_role',
         widget = wibox.widget.textbox,
       },
-      margin = 5,
+      margin = dpi(5),
       layout = wibox.layout.fixed.horizontal,
     },
   }
