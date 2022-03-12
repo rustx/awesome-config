@@ -296,24 +296,28 @@ keys.globalkeys = gears.table.join(
     { description = "view previous", group = "tag"}
   ),
 
-  awful.key({ modkey }, "Right",
+  awful.key(
+    { modkey }, "Right",
     awful.tag.viewnext,
     {description = "view next", group = "tag"}
   ),
 
-  awful.key({ modkey }, "Escape",
+  awful.key(
+    { modkey }, "Escape",
     awful.tag.history.restore,
     {description = "go back", group = "tag"}
   ),
 
-  awful.key({ modkey }, "r",
+  awful.key(
+    { modkey }, "r",
     function ()
       awful.screen.focused().promptbox:run()
     end,
     { description = "run prompt", group = "launcher" }
   ),
 
-  awful.key({ modkey }, "x",
+  awful.key(
+    { modkey }, "x",
     function ()
       awful.prompt.run {
       prompt       = "Run Lua code: ",
@@ -518,8 +522,9 @@ keys.globalkeys = gears.table.join(
     { description = "dropdown application", group = "applications"}
   ),
 
-  awful.key({ modkey, altkey }, "l",
-    function () os.execute(Apps.scrlocker) end,
+  awful.key(
+    { modkey, altkey }, "l",
+    function () awful.spawn(Apps.scrlocker) end,
     {description = "lock screen", group = "hotkeys"}
   ),
 
