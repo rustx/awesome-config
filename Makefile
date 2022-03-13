@@ -1,57 +1,40 @@
 # Awesome config Makefile
 PWD:=$(shell pwd)
 
-gtk_theme:
-	cd /tmp &&\
-	git clone git@github.com:vinceliuice/vimix-gtk-themes.git &&\
-	cd vimix-gtk-themes && \
-	./install.sh -a
+GTK_THEMES := vimix-gtk-themes vimix-icon-theme
+LUA_PAM_GIT := github.com:RMTT/lua-pam.git
 
-gtk_icon:
-	cd /tmp &&\
-	git clone git@github.com:vinceliuice/vimix-icon-theme.git &&\
-	cd vimix-icon-theme && \
-	./install.sh -a
+define install_gtk
+	$(foreach gtk,$(GTK_THEMES),git clone git@github.com:vinceliuice/$(gtk).git && cd $(gtk) && ./install.sh -a;)
+endef
 
-git_config:
-	if ! [ -f $HOME/.config/gtkrc-2.0 ] \
-    then \
-        mkdir $HOME/.config/gtk-2.0  && \
-        echo -e "* $HOME/.config/gtk2.0 directory  created successfully" \
-        { \
-            echo -e "[Settings]"  \
-            echo -e "gtk-theme-name = vimix-light-beryl" \
-            echo -e "gtk-icon-theme-name = Vimix" \
-            echo -e "gtk-sound-theme-name = ubuntu" \
-            echo -e "gtk-icon-sizes = panel-menu-bar=24,24" \
-        } > $HOME/.config/gtk-2.0/settings.ini && \
-        chown $USER: $HOME/.gtkrc-2.0 && \
-        echo -e "* gtkrc-2.0 config file created successfully" \
-    else \
-        echo -e "* gtkrc-2.0 directory file already exists" \
-    fi \
-    if [ ! -d $HOME/.config/gtk-3.0 ] \
-    then \
-        mkdir $HOME/.config/gtk-3.0  && \
-        echo -e "* $HOME/.config/gtk3.0 directory  created successfully" \
-        { \
-            echo -e "[Settings]" \
-            echo -e "gtk-theme-name = vimix-light-beryl" \
-            echo -e "gtk-icon-theme-name = Vimix" \
-            echo -e "gtk-sound-theme-name = ubuntu" \
-            echo -e "gtk-icon-sizes = panel-menu-bar=24,24" \
-        } > $HOME/.config/gtk-3.0/settings.ini && \
-        chown $USER: $HOME/.config/gtkrc-3.0 && \
-        echo -e "* settings.ini config file created successfully" \
-    else \
-        echo -e "* gtkr-3.0 directory  already exists" \
-    fi
+define build_lua_pam
+	git clone git@$(LUA_PAM_GIT) && \
+	cd lua-pam && \
+	sed -i 's#14)#14)\n\ninclude_directories(/usr/include/lua5.3)#; s# lua # lua5.3 #;' CMakeLists.txt && \
+	cmake . -B build && \
+	make -C build && \
+	sudo -S install -Dm 755 build/liblua_pam.so -t /usr/lib/lua-pam/
+endef
+
+gtk_setup:
+	cd /tmp &&\
+	$(call install_gtk)
+
+gtk_config:
+	lxappearance
+
+lua_pam:
+	cd /tmp && \
+	$(call build_lua_pam)
 
 xmodmap:
 	echo "keycode 108 = Multi_key Alt_R Meta_R Alt_R Meta_R" > $(HOME)/.Xmodmap
 
 apt_deps:
-	sudo apt-get update && sudo apt-get install -y compton xsel xclip python3-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
+	sudo -S apt-get update && \
+	sudo -S apt-get install -y \
+	compton xsel xclip python3-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
 	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev \
 	lua-sec lua-socket lua-http lua-json lua-cjson
 
