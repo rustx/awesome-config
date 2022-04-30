@@ -18,9 +18,11 @@ local helpers = require("helpers")
 -- Config
 -- ========================================
 
+local backlight_path = "/sys/class/backlight"
+
 -- script to monitor volume events
 -- Subscribe to backlight changes
-local monitor_script = "inotifywait -mq -e modify /sys/class/backlight/*/brightness"
+local monitor_script = "[ ! -z \"$(ls -A " .. backlight_path .. ")\" ] && inotifywait -mq -e modify ".. backlight_path .. "/*/brightness || echo \"N/A\""
 
 local brightness_script = "light -G"
 

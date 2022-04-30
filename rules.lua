@@ -171,9 +171,9 @@ local rules = {
   {
     rule_any = {
       class = {
-        "slack",
+        "Slack",
         "discord",
-        "telegram"
+        "Telegram"
       }
     },
     properties = {

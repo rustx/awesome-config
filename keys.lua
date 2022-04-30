@@ -493,7 +493,7 @@ keys.globalkeys = gears.table.join(
   awful.key(
     { modkey }, "Return",
     function () awful.spawn(Apps.terminal) end,
-    { description = "terminal", group = "hotkeys" }
+    { description = "terminal", group = "applications" }
   ),
 
   awful.key(
@@ -501,19 +501,19 @@ keys.globalkeys = gears.table.join(
     function ()
       awful.spawn.with_shell([[ notify-send "Current Weather" "$(curl -s "wttr.in?T0")" ]])
     end,
-    { description = "get current weather", group = "hotkeys" }
+    { description = "get current weather", group = "applications" }
   ),
 
   awful.key(
     { modkey }, "d",
     function () awful.spawn(Apps.launcher) end,
-    { description = "application launcher", group = "hotkeys" }
+    { description = "application launcher", group = "applications" }
   ),
 
   awful.key(
     { modkey }, "b",
     function () awful.spawn(Apps.web_browser) end,
-    { description = "open sweb browser", group = "applications" }
+    { description = "open web browser", group = "applications" }
   ),
 
   awful.key(
@@ -523,9 +523,9 @@ keys.globalkeys = gears.table.join(
   ),
 
   awful.key(
-    { modkey, altkey }, "l",
+    { modkey, altkey }, "x",
     function () awful.spawn(Apps.scrlocker) end,
-    {description = "lock screen", group = "hotkeys"}
+    {description = "lock screen", group = "applications"}
   ),
 
   awful.key(
@@ -550,12 +550,6 @@ keys.globalkeys = gears.table.join(
     { modkey, altkey }, 'p',
     function() awful.spawn("pycharm") end,
     { description = "open pycharm ide", group = "applications" }
-  ),
-
-  awful.key(
-    { modkey, altkey }, 'x',
-    function() awful.spawn(Apps.terminal .. " -title mutt -e sh -c 'mutt'") end,
-    { description = "open mutt session", group = "applications" }
   ),
 
   awful.key(

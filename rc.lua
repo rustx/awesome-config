@@ -74,15 +74,15 @@ awful.layout.layouts = {
 
 -- tags
 Tags = {
-  { name = "web",   layout = awful.layout.layouts[1], screen = {1, 1, 2} },
-  { name = "mail",  layout = awful.layout.layouts[1], screen = {1, 1, 2} },
-  { name = "desk",  layout = awful.layout.layouts[1], screen = {1, 2, 1} },
-  { name = "dev",   layout = awful.layout.layouts[1], screen = {1, 2, 1} },
-  { name = "shell", layout = awful.layout.layouts[6], screen = {1, 2, 3} },
+  { name = "web",   layout = awful.layout.layouts[1], screen = {1, 2, 2} },
+  { name = "mail",  layout = awful.layout.layouts[1], screen = {1, 2, 2} },
+  { name = "desk",  layout = awful.layout.layouts[1], screen = {1, 1, 1} },
+  { name = "dev",   layout = awful.layout.layouts[1], screen = {1, 1, 1} },
+  { name = "shell", layout = awful.layout.layouts[6], screen = {1, 1, 3} },
   { name = "talk",  layout = awful.layout.layouts[1], screen = {1, 1, 1} },
-  { name = "media", layout = awful.layout.layouts[1], screen = {1, 1, 3} },
-  { name = "sys",   layout = awful.layout.layouts[1], screen = {1, 2, 1} },
-  { name = "games", layout = awful.layout.layouts[1], screen = {1, 2, 3} },
+  { name = "media", layout = awful.layout.layouts[1], screen = {1, 2, 3} },
+  { name = "sys",   layout = awful.layout.layouts[1], screen = {1, 1, 1} },
+  { name = "games", layout = awful.layout.layouts[1], screen = {1, 1, 3} },
 }
 
 -- run these commands at startup

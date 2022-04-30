@@ -84,7 +84,7 @@ local build_left_widgets = function(s, widgets)
 end
 
 awful.screen.connect_for_each_screen(function(s)
-  s.promptbox = awful.widget.prompt()
+  s.promptbox = awful.widget.prompt({bg_cursor=beautiful.color.white})
   s.quake = quake({ app = Apps.terminal, followtag = true, name = 'Quake' })
   s.topbar = awful.wibar({
     screen = s,
