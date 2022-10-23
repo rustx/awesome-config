@@ -36,7 +36,7 @@ end
 
 -- get battery icon
 local get_battery_icon = function (percentage, status)
-  if percentage == nil then return icons_path .. "battery.svg" end
+  if percentage == nil then return icons_path .. "charger-plugged.svg" end
 
   local icon_name = "battery"
 
@@ -80,7 +80,6 @@ local create_widget = function (screen)
     },
     {
       id = "text",
-      text = "battery text",
       widget = wibox.widget.textbox
     },
     id = "container",
@@ -97,7 +96,7 @@ local create_widget = function (screen)
   container:buttons(buttons(screen))
 
   image_widget.tooltip = require("widgets.tooltip")({ container })
-  image_widget.tooltip.text = "Battery status unknown"
+  image_widget.tooltip.text = "AC adapter plugged in"
 
   return container
 end
