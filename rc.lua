@@ -93,6 +93,8 @@ local startup_scripts = {
   --"xset r rate 200 30",
   -- Compositor
   "compton",
+  -- Geoclue Demo Agent
+  "/usr/libexec/geoclue-2.0/demos/agent",
   -- Night mode
   "redshift-gtk",
   -- Set wallpaper
