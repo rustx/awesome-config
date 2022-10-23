@@ -243,6 +243,46 @@ helpers.get_screen = function(t)
   end
 end
 
+-- set widgets in bar components
+helpers.set_widgets = function(s, bar, direction, color, widgets)
+  local element = bar:get_children_by_id(direction)[1]
+
+  local arrow = function(direction, color)
+    if direction == "right" then
+      if color == "dark" then
+        return beautiful.arrr_dl
+      elseif color == "light" then
+        return beautiful.arrl_dl
+      end
+    elseif direction == "left" then
+      if color == "dark" then
+        return beautiful.arrl_dl
+      elseif color == "light" then
+        return beautiful.arrr_dl
+      end
+    end
+  end
+
+  for i, wdg in pairs(widgets) do
+    if (i % 2 ~= 0) then
+      element:add(require("widgets." .. wdg)(s))
+      if i ~= #widgets then
+        element:add(arrow(direction, color))
+      end
+    else
+      element:add(
+        wibox.container.background(
+          require("widgets." .. wdg)(s),
+          beautiful.color.darkgrey
+        )
+      )
+      if i ~= #widgets then
+        element:add(beautiful.arrl_dl)
+      end
+    end
+  end
+end
+
 -- get percentage colors
 helpers.get_pct_color = function(pct, dir)
   local colors = {
