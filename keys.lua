@@ -529,13 +529,13 @@ keys.globalkeys = gears.table.join(
   ),
 
   awful.key(
-    { modkey, altkey }, 'c',
+    { modkey, altkey }, "c",
     function() awful.spawn("google-chrome-stable") end,
     { description = "open google chrome stable browser", group = "applications" }
   ),
 
   awful.key(
-    { modkey, altkey }, 'b',
+    { modkey, altkey }, "b",
     function() awful.spawn("brave-browser") end,
     { description = "open brave browser", group = "applications" }
   ),
@@ -547,19 +547,19 @@ keys.globalkeys = gears.table.join(
   ),
 
   awful.key(
-    { modkey, altkey }, 'p',
+    { modkey, altkey }, "p",
     function() awful.spawn("pycharm") end,
     { description = "open pycharm ide", group = "applications" }
   ),
 
   awful.key(
-    { modkey, altkey }, 'u',
+    { modkey, altkey }, "u",
       function() awful.spawn(Apps.terminal .. " -title urxvt_shell") end,
     { description = "open shell session", group = "applications" }
   ),
 
   awful.key(
-    { modkey, altkey }, 'v',
+    { modkey, altkey }, "v",
     function() awful.spawn(Apps.terminal .. " -title vim_ide -e sh -c 'vim'") end,
     { description = "open vim ide", group = "applications" }
   ),
