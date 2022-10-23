@@ -119,7 +119,8 @@ local rules = {
   {
     rule_any = {
       class = {
-        "Thunderbird"
+        "Thunderbird",
+        "thunderbird"
       },
       name = {
         "mutt"
