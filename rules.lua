@@ -24,17 +24,17 @@ local rules = {
       keys = keys.clientkeys,
       buttons = keys.clientbuttons,
       screen = awful.screen.preferred,
-      placement = awful.placement.no_offscreen+awful.placement.centered
+      placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen
     }
   },
 
   -- Pavucontrol & Bluetooth Devices
   {
     rule_any = {
-    class = {
-      "Pavucontrol",
+      class = {
+        "Pavucontrol",
+      },
     },
-  },
     properties = {
       width = screen_width * 0.30,
       height = screen_height * 0.50,
@@ -45,8 +45,8 @@ local rules = {
   {
     rule_any = {
       instance = {
-        "DTA",  -- Firefox addon DownThemAll.
-        "copyq",  -- Includes session name in class.
+        "DTA", -- Firefox addon DownThemAll.
+        "copyq", -- Includes session name in class.
         "pinentry",
       },
       class = {
@@ -66,13 +66,13 @@ local rules = {
       },
       name = {
         "Bluetooth Devices",
-        "Event Tester",  -- xev.
+        "Event Tester", -- xev.
         "Steam Guard - Computer Authorization Required",
       },
       role = {
-        "AlarmWindow",  -- Thunderbird's calendar.
-        "ConfigManager",  -- Thunderbird's about:config.
-        "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+        "AlarmWindow", -- Thunderbird's calendar.
+        "ConfigManager", -- Thunderbird's about:config.
+        "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
         "GtkFileChooserDialog",
       },
       type = {
@@ -141,6 +141,7 @@ local rules = {
         "jetbrains-goland",
         "jetbrains-idea-ce",
         "jetbrains-idea",
+        "Code"
       },
       name = {
         "vim_ide"
