@@ -41,7 +41,6 @@ end
 
 -- update crypto_rates popup
 local update_popup = function(widget, rates, coin)
-
   local title_popup = widget:get_children_by_id(coin .. '_title')[1]
   local trend_popup = widget:get_children_by_id(coin .. '_trend')[1]
   local date_popup = widget:get_children_by_id(coin .. '_date')[1]
@@ -54,11 +53,11 @@ local update_popup = function(widget, rates, coin)
 
     title_popup:set_markup(
       '<b><span size="large">' .. coin .. ' </span></b>' ..
-        '<b><span size="large" color="' .. fmt.color .. '">' .. fmt.arrow .. '</span></b>'
+      '<b><span size="large" color="' .. fmt.color .. '">' .. fmt.arrow .. '</span></b>'
     )
     trend_popup:set_markup(
       '<b><span size="medium">' .. Coins.currency.symbol .. rate .. ' </span></b>' ..
-        '<b><span size="medium" color="' .. fmt.color .. '">' .. string.format('%.2f', trend) .. '% </span></b>'
+      '<b><span size="medium" color="' .. fmt.color .. '">' .. string.format('%.2f', trend) .. '% </span></b>'
     )
     date_popup:set_markup(
       '<b><span size="small">' .. os.date('%Y-%m-%d %H:%M:%S', last_updated) .. '</span></b>'
@@ -68,12 +67,10 @@ local update_popup = function(widget, rates, coin)
     trend_popup:set_markup(' N/A ')
     date_popup:set_markup(' N/A ')
   end
-
 end
 
 -- update crypto_rates widget
 local update_widget = function(widget, rates, coin)
-
   local text_widget = widget:get_children_by_id("text")[1]
   if rates ~= nil then
     local currency_name = rates[coin][Coins.currency.name]
@@ -85,11 +82,9 @@ local update_widget = function(widget, rates, coin)
   else
     text_widget:set_markup(' N/A ')
   end
-
 end
 
 local create_widget = function(screen, coin)
-
   local crypto_icon = wibox.widget {
     image = icons_path .. coin .. ".svg",
     resize = true,
@@ -129,16 +124,12 @@ local create_widget = function(screen, coin)
                 align = 'center',
                 widget = wibox.widget.textbox
               },
-              margins = dpi(8),
-              layout = wibox.container.margin,
               {
                 id = coin .. '_trend',
                 markup = "N/A ",
                 align = 'center',
                 widget = wibox.widget.textbox
               },
-              margins = dpi(8),
-              layout = wibox.container.margin,
               {
                 id = coin .. '_date',
                 markup = "N/A ",
@@ -147,6 +138,7 @@ local create_widget = function(screen, coin)
               },
               spacing = dpi(8),
               forced_width = dpi(150),
+              margins = dpi(8),
               layout = wibox.layout.flex.vertical
             },
             valign = 'center',
