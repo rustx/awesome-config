@@ -18,13 +18,12 @@ local keys = require("keys")
 -- icons path
 local icons_path = beautiful.icons_path .. "battery/"
 
-
 -- ========================================
 -- Definition
 -- ========================================
 
 -- define buttons
-local buttons = function (screen)
+local buttons = function(screen)
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -33,9 +32,8 @@ local buttons = function (screen)
   )
 end
 
-
 -- get battery icon
-local get_battery_icon = function (percentage, status)
+local get_battery_icon = function(percentage, status)
   if percentage == nil then return icons_path .. "charger-plugged.svg" end
 
   local icon_name = "battery"
@@ -56,8 +54,7 @@ local get_battery_icon = function (percentage, status)
 end
 
 -- update widget
-local update_widget = function (widget, _, stat, summary)
-
+local update_widget = function(widget, _, stat, summary)
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
 
@@ -69,10 +66,9 @@ local update_widget = function (widget, _, stat, summary)
   )
 end
 
-
 -- create widget instance
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function(screen)
+  local widget = wibox.widget {
     {
       id = "image",
       image = get_battery_icon(),
