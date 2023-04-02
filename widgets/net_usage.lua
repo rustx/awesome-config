@@ -9,7 +9,7 @@ local beautiful = require("beautiful")
 
 local icons_path = beautiful.icons_path .. "network/"
 
-local create_widget = function (screen)
+local create_widget = function ()
   local widget = wibox.widget{
     {
       id = "up",

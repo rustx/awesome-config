@@ -23,8 +23,7 @@ local icons_path = beautiful.icons_path .. "battery/"
 -- ========================================
 
 -- define buttons
-local buttons = function(screen)
-  return gears.table.join(
+local buttons = function() return gears.table.join(
     awful.button(
       {}, keys.leftclick,
       function() awful.spawn(Apps.power_manager) end
@@ -67,7 +66,7 @@ local update_widget = function(widget, _, stat, summary)
 end
 
 -- create widget instance
-local create_widget = function(screen)
+local create_widget = function()
   local widget = wibox.widget {
     {
       id = "image",
@@ -89,7 +88,7 @@ local create_widget = function(screen)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-  container:buttons(buttons(screen))
+  container:buttons(buttons())
 
   image_widget.tooltip = require("widgets.tooltip")({ container })
   image_widget.tooltip.text = "AC adapter plugged in"

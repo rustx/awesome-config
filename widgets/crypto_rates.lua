@@ -22,7 +22,7 @@ local icons_path = beautiful.icons_path .. "crypto/"
 -- ========================================
 
 -- watch crypto rates details on goingecko
-local buttons = function(screen, coin)
+local buttons = function(coin)
   return gears.table.join(
     awful.button(
       {}, keys.rightclick,
@@ -177,7 +177,7 @@ local create_widget = function(screen, coin)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-  container:buttons(buttons(screen, coin))
+  container:buttons(buttons(coin))
 
   return container
 end

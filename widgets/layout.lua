@@ -8,7 +8,7 @@ local gears = require("gears")
 local keys = require("keys")
 
 -- define buttons
-local buttons = function (s)
+local buttons = function()
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -30,11 +30,11 @@ local buttons = function (s)
 end
 
 -- create widget instance
-local create_widget = function (s)
+local create_widget = function(s)
   local widget = awful.widget.layoutbox(s)
 
   local container = require("widgets.clickable_container")(widget)
-  container:buttons(buttons(screen))
+  container:buttons(buttons())
 
   return container
 end

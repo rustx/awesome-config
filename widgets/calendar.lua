@@ -8,7 +8,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 -- create widget instance
-local create_widget = function (screen)
+local create_widget = function(screen)
   -- Clock Widget
   local clock_widget = wibox.widget {
     widget = wibox.widget.textclock,

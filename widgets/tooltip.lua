@@ -6,7 +6,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 
-local create_widget = function (objects)
+local create_widget = function(objects)
   return awful.tooltip({
     objects = objects,
     text = "Tooltip",

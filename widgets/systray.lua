@@ -24,7 +24,7 @@ local icons_path = beautiful.icons_path .. "systray/"
 -- ========================================
 
 -- update widget
-local update_widget = function (widget)
+local update_widget = function(widget)
   widget.systray.visible = widget.show_systray
 
   if widget.show_systray then
@@ -38,14 +38,14 @@ end
 
 
 -- toggle systray visibility
-local toggle_systray = function (widget)
+local toggle_systray = function(widget)
   widget.show_systray = not widget.show_systray
   update_widget(widget)
 end
 
 
 -- define buttons
-local buttons = function (screen, widget)
+local buttons = function(widget)
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -56,7 +56,7 @@ end
 
 
 -- create widget instance
-local create_widget = function (screen)
+local create_widget = function()
   local button = wibox.widget {
     image = icons_path .. "systray_show.svg",
     widget = wibox.widget.imagebox,
@@ -81,13 +81,13 @@ local create_widget = function (screen)
     button_container,
   }
 
-  button_container:buttons(buttons(screen, wrapper))
+  button_container:buttons(buttons(wrapper))
 
   systray.visible = false
   button.tooltip = require("widgets.tooltip")({ button_container })
   button.tooltip.text = "Show systray"
 
-  awesome.connect_signal("widget::systray::toggle", function ()
+  awesome.connect_signal("widget::systray::toggle", function()
     toggle_systray(wrapper)
   end)
 

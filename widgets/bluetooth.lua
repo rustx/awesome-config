@@ -23,7 +23,7 @@ local icons_path = beautiful.icons_path .. "bluetooth/"
 -- ========================================
 
 -- define buttons
-local buttons = function (screen)
+local buttons = function(screen)
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -33,7 +33,7 @@ local buttons = function (screen)
 end
 
 -- update widget
-local update_widget = function (widget, info)
+local update_widget = function(widget, info)
   local icon_name
   local status
 
@@ -51,21 +51,21 @@ local update_widget = function (widget, info)
   else
     icon_name = "bluetooth-off.svg"
     status = "off"
-    text_widget:set_markup('<span color="' .. beautiful.color.red .. '"> ' .. info.device and info.device or "N/A".. '</span>')
+    text_widget:set_markup('<span color="' .. beautiful.color.red .. '"> ' .. info.device and info.device or
+    "N/A" .. '</span>')
     image_widget.tooltip.text = string.format(
       "Bluetooth is %s\nDevice: %s\nMac: %s",
-       status, info.device, info.mac
+      status, info.device, info.mac
     )
   end
 
   image_widget.image = icons_path .. icon_name
-
 end
 
 
 -- create widget instance
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function(screen)
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "bluetooth.svg",
@@ -80,7 +80,7 @@ local create_widget = function (screen)
   }
   local image_widget = widget:get_children_by_id("image")[1]
 
-  awesome.connect_signal("daemon::bluetooth::info", function (...)
+  awesome.connect_signal("daemon::bluetooth::info", function(...)
     update_widget(widget, ...)
   end)
 

@@ -24,7 +24,7 @@ local icons_path = beautiful.icons_path .. "network/"
 -- ========================================
 
 -- define buttons
-local buttons = function (screen)
+local buttons = function()
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -34,15 +34,15 @@ local buttons = function (screen)
 end
 
 -- update wireless status
-local update_wireless_status = function (widget, interface, healthy, essid, bitrate, strength)
+local update_wireless_status = function(widget, interface, healthy, essid, bitrate, strength)
   local status = healthy
-    and "Connected to internet"
-    or  "Connected but no internet!"
+      and "Connected to internet"
+      or "Connected but no internet!"
 
   local strength_level = math.ceil(strength * 0.04)
   local icon_name = healthy
-    and string.format("wifi-strength-%s", strength_level)
-    or  string.format("wifi-strength-%s-alert", strength_level)
+      and string.format("wifi-strength-%s", strength_level)
+      or string.format("wifi-strength-%s-alert", strength_level)
 
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
@@ -67,14 +67,14 @@ end
 
 
 -- update wired status
-local update_wired_status = function (widget, interface, healthy)
+local update_wired_status = function(widget, interface, healthy)
   local status = healthy
-    and "Connected to internet"
-    or "Connected but no internet!"
+      and "Connected to internet"
+      or "Connected but no internet!"
 
   local icon_name = healthy
-    and "wired"
-    or "wired-alert"
+      and "wired"
+      or "wired-alert"
 
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
@@ -91,7 +91,7 @@ end
 
 
 -- update disconnected status
-local update_disconnected = function (widget, mode)
+local update_disconnected = function(widget, mode)
   local icon_name = nil
 
   if mode == "wireless" then
@@ -106,12 +106,11 @@ local update_disconnected = function (widget, mode)
   image_widget.image = icons_path .. icon_name .. ".svg"
   image_widget.tooltip.text = "Network is currently disconnected"
   text_widget:set_markup(' N/A')
-
 end
 
 -- create widget instance
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function()
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "loading.svg",
@@ -141,7 +140,7 @@ local create_widget = function (screen)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-  container:buttons(buttons(screen))
+  container:buttons(buttons())
 
   image_widget.tooltip = require("widgets.tooltip")({ container })
   image_widget.tooltip.text = "Network status unknown"

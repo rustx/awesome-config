@@ -23,14 +23,14 @@ local get_mount_points = function()
   for line in io.lines("/proc/mounts") do
     local dev = string.match(line, "^/dev/([nvm|sd|hd][%a%d]-[%a%d]+)%s")
     if dev ~= nil then
-      table.insert(mp,  string.match(line, dev .. " ([/%a]+)"))
+      table.insert(mp, string.match(line, dev .. " ([/%a]+)"))
     end
   end
   return mp
 end
 
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function()
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "fs.svg",
@@ -62,3 +62,4 @@ local create_widget = function (screen)
 end
 
 return create_widget
+

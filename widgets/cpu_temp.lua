@@ -18,8 +18,8 @@ local icons_path = beautiful.icons_path .. "cpu/"
 -- Definition
 -- ========================================
 
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function()
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "cpu_temp.svg",
@@ -39,10 +39,10 @@ local create_widget = function (screen)
   vicious.register(
     text_widget,
     vicious.widgets.thermal,
-    function (widget, args)
+    function(_, args)
       return (
-        '<span color="%s">%s°C</span>'
-      ):format(helpers.get_pct_color(args[1], "up"), args[1])
+          '<span color="%s">%s°C</span>'
+          ):format(helpers.get_pct_color(args[1], "up"), args[1])
     end,
     13,
     "thermal_zone0"

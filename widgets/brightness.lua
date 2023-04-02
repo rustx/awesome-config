@@ -23,7 +23,7 @@ local icons_path = beautiful.icons_path .. "brightness/"
 -- ========================================
 
 -- define buttons
-local buttons = function (screen)
+local buttons = function()
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -46,8 +46,7 @@ local buttons = function (screen)
 end
 
 -- update brightness widget
-local update_widget = function (widget, percentage)
-
+local update_widget = function(widget, percentage)
   local icon_name
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
@@ -67,8 +66,8 @@ local update_widget = function (widget, percentage)
 end
 
 -- create widget instance
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function()
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "brightness_medium.svg",
@@ -82,12 +81,12 @@ local create_widget = function (screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  awesome.connect_signal("daemon::brightness::percentage", function (...)
+  awesome.connect_signal("daemon::brightness::percentage", function(...)
     update_widget(widget, ...)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-  container:buttons(buttons(screen))
+  container:buttons(buttons())
 
   return container
 end

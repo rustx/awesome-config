@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 --
 -- clickable_container.lua
 -- eyecandy effect when hovering over widgets
@@ -7,7 +8,7 @@ local wibox = require('wibox')
 local beautiful = require("beautiful")
 
 -- create widget instance
-local create_widget = function (widget)
+local create_widget = function(widget)
   local old_cursor, old_wibox
 
   local container = wibox.widget {

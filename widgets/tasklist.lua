@@ -20,7 +20,7 @@ local update_widget = function(widget)
 end
 
 local tasklist_buttons = gears.table.join(
-  awful.button({ }, 1, function(c)
+  awful.button({}, 1, function(c)
     if c == client.focus then
       c.minimized = true
     else
@@ -31,18 +31,18 @@ local tasklist_buttons = gears.table.join(
       )
     end
   end),
-  awful.button({ }, 3, function()
+  awful.button({}, 3, function()
     awful.menu.client_list({ theme = { width = dpi(250) } })
   end),
-  awful.button({ }, 4, function()
+  awful.button({}, 4, function()
     awful.client.focus.byidx(1)
   end),
-  awful.button({ }, 5, function()
+  awful.button({}, 5, function()
     awful.client.focus.byidx(-1)
   end))
 
 -- create client_name widget instance
-local create_widget = function(screen, cr)
+local create_widget = function(screen)
   local widget = awful.widget.tasklist {
     screen = screen,
     filter = awful.widget.tasklist.filter.currenttags,
@@ -78,10 +78,9 @@ local create_widget = function(screen, cr)
         widget = wibox.container.margin
       },
       nil,
-      create_callback = function(self, c, index, objects) --luacheck: no unused args
+      create_callback = function(self, c)
         self:get_children_by_id('clienticon_role')[1].client = c
       end,
-      layout = wibox.layout.align.vertical,
       {
         id = 'text_role',
         widget = wibox.widget.textbox,

@@ -19,8 +19,8 @@ local icons_path = beautiful.icons_path .. "memory/"
 -- Definition
 -- ========================================
 
-local create_widget = function (screen)
-  local widget = wibox.widget{
+local create_widget = function()
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "memory.svg",
@@ -40,10 +40,10 @@ local create_widget = function (screen)
   vicious.register(
     text_widget,
     vicious.widgets.mem,
-    function(widget, args)
-      return(
-        '<span> %.2f/%2.f GiB</span><span color="%s"> (%s%%)</span>'
-      ):format( tonumber(args[2]/1024), tonumber(args[3]/1024), helpers.get_pct_color(args[1], "up"), args[1] )
+    function(_, args)
+      return (
+          '<span> %.2f/%2.f GiB</span><span color="%s"> (%s%%)</span>'
+          ):format(tonumber(args[2] / 1024), tonumber(args[3] / 1024), helpers.get_pct_color(args[1], "up"), args[1])
     end,
     --" $2/$3 MiB ($1%)",
     13

@@ -24,7 +24,7 @@ local icons_path = beautiful.icons_path .. "volume/"
 -- ========================================
 
 -- define buttons
-local buttons = function (screen)
+local buttons = function()
   return gears.table.join(
     awful.button(
       {}, keys.leftclick,
@@ -47,7 +47,7 @@ end
 
 
 -- update widget percentage
-local update_widget_percentage = function (widget, percentage)
+local update_widget_percentage = function(widget, percentage)
   local icon_name
 
   local image_widget = widget:get_children_by_id("image")[1]
@@ -70,7 +70,7 @@ end
 
 
 -- update widget mute
-local update_widget_mute = function (widget)
+local update_widget_mute = function(widget)
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
 
@@ -81,9 +81,8 @@ end
 
 
 -- create widget instance
-local create_widget = function (screen)
-
-  local widget = wibox.widget{
+local create_widget = function()
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "volume_medium.svg",
@@ -97,15 +96,15 @@ local create_widget = function (screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  awesome.connect_signal("daemon::volume::percentage", function (...)
+  awesome.connect_signal("daemon::volume::percentage", function(...)
     update_widget_percentage(widget, ...)
   end)
-  awesome.connect_signal("daemon::volume::muted", function ()
+  awesome.connect_signal("daemon::volume::muted", function()
     update_widget_mute(widget)
   end)
 
   local container = require("widgets.clickable_container")(widget)
-  container:buttons(buttons(screen))
+  container:buttons(buttons())
 
   return container
 end

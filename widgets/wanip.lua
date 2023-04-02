@@ -18,8 +18,7 @@ local icons_path = beautiful.icons_path .. "wanip/"
 -- ========================================
 
 -- update wanip widget
-local update_widget = function (widget, address)
-
+local update_widget = function(widget, address)
   local icon_name
   local image_widget = widget:get_children_by_id("image")[1]
   local text_widget = widget:get_children_by_id("text")[1]
@@ -36,7 +35,7 @@ local update_widget = function (widget, address)
 end
 
 local create_widget = function(screen)
-  local widget = wibox.widget{
+  local widget = wibox.widget {
     {
       id = "image",
       image = icons_path .. "wanip_off.svg",
@@ -50,7 +49,7 @@ local create_widget = function(screen)
     layout = wibox.layout.fixed.horizontal,
   }
 
-  awesome.connect_signal("daemon::wanip::address", function (...)
+  awesome.connect_signal("daemon::wanip::address", function(...)
     update_widget(widget, ...)
   end)
 

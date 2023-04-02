@@ -7,8 +7,7 @@ local wibox = require('wibox')
 local beautiful = require("beautiful")
 
 -- create widget instance
-local create_widget = function (widget, bg)
-
+local create_widget = function(widget, bg)
   local container = wibox.widget {
     widget = wibox.container.background,
     {
