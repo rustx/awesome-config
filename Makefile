@@ -63,6 +63,4 @@ stop_xephyr:
 	fi
 
 awesome_session: stop_xephyr start_xephyr
-	 DISPLAY=:2.0 awesome -c $(PWD)/rc.lua
-
-
+	DISPLAY=:2.0 awesome -c $(PWD)/rc.lua
