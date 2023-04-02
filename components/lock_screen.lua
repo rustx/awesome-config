@@ -34,7 +34,7 @@ LockScreen.__index = LockScreen
 
 
 -- Class constructor
-function LockScreen:new (s)
+function LockScreen:new(s)
   -- create new class instance
   local lock_screen = {}
   setmetatable(lock_screen, LockScreen)
@@ -67,9 +67,8 @@ function LockScreen:new (s)
   return lock_screen
 end
 
-
 -- Create the lock screen wrapper
-function LockScreen:create_wrapper ()
+function LockScreen:create_wrapper()
   local wrapper = wibox {
     screen  = self.screen,
     x       = self.screen.geometry.x,
@@ -86,7 +85,7 @@ function LockScreen:create_wrapper ()
 end
 
 -- Create the lock screen widget
-function LockScreen:create_widget ()
+function LockScreen:create_widget()
   return {
     -- Horizontal centering
     layout = wibox.layout.align.horizontal,
@@ -143,9 +142,8 @@ function LockScreen:create_widget ()
   }
 end
 
-
 -- Create dot
-function LockScreen:create_dot ()
+function LockScreen:create_dot()
   return {
     widget        = wibox.widget.imagebox,
     image         = beautiful.lock_screen_dot_icon,
@@ -155,9 +153,8 @@ function LockScreen:create_dot ()
   }
 end
 
-
 -- Create dots
-function LockScreen:create_dots ()
+function LockScreen:create_dots()
   local dots = {}
 
   for i = 1, string.len(self.textbox.text) - 1 do
@@ -167,9 +164,8 @@ function LockScreen:create_dots ()
   return dots
 end
 
-
 -- Init signals
-function LockScreen:init_signals ()
+function LockScreen:init_signals()
   -- show the lock screen when signal is broadcasted
   awesome.connect_signal("lock_screen::show", function()
     self:show()
@@ -182,43 +178,38 @@ function LockScreen:init_signals ()
   end)
 
   if self.widget ~= nil then
-    self.textbox:connect_signal("widget::redraw_needed", function ()
+    self.textbox:connect_signal("widget::redraw_needed", function()
       self.widget = self:create_widget()
       self.wrapper:setup(self.widget)
     end)
   end
 end
 
-
 -- Show lock screen
-function LockScreen:show ()
+function LockScreen:show()
   self.wrapper.visible = true
 end
 
-
 -- Hide lock screen
-function LockScreen:hide ()
+function LockScreen:hide()
   self.wrapper.visible = false
 end
 
-
 -- Authenticate with user input
-function LockScreen:authenticate (password)
+function LockScreen:authenticate(password)
   local pam = require("liblua_pam")
 
   return pam.auth_current_user(password)
 end
 
-
 -- Reset user input
-function LockScreen:reset_input ()
+function LockScreen:reset_input()
 end
 
-
 -- Get input from user
-function LockScreen:get_input ()
+function LockScreen:get_input()
   awful.prompt.run {
-    hooks = {
+    hooks                = {
       -- Custom escape behaviour: Do not cancel input with Escape
       -- Instead, this will just clear any input received so far.
       {
@@ -232,18 +223,18 @@ function LockScreen:get_input ()
       -- Fix for Control+Delete crashing the keygrabber
       {
         { keys.ctrlkey }, "Delete",
-        function ()
+        function()
           self:reset_input()
           self:get_input()
         end
       },
     },
 
-    keyreleased_callback  = function (_, __, input)
+    keyreleased_callback = function(_, _, _)
       -- self:update_mask(input)
     end,
 
-    exe_callback = function(input)
+    exe_callback         = function(input)
       -- Check input
       if self:authenticate(input) then
         -- YAY
@@ -254,10 +245,9 @@ function LockScreen:get_input ()
       end
     end,
 
-    textbox = self.textbox,
+    textbox              = self.textbox,
   }
 end
-
 
 -- ========================================
 -- Initialization
@@ -269,13 +259,12 @@ package.cpath = package.cpath .. ";" .. lib_path
 -- First check library exists
 if helpers.is_module_available("liblua_pam") then
   -- Add lockscreen to each screen
-  awful.screen.connect_for_each_screen(function (s)
+  awful.screen.connect_for_each_screen(function(s)
     s.lock_screen = LockScreen:new(s)
   end)
-
 else
   -- If library not found show notification when activated
-  local notify_lib_missing = function ()
+  local notify_lib_missing = function()
     naughty.notify {
       icon  = beautiful.lock_screen_warning_icon,
       title = "Lock Screen",

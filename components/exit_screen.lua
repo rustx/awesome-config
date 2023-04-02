@@ -21,38 +21,33 @@ local icons_path = beautiful.icons_path .. "exit_screen/"
 -- buttons list
 local buttons = {
   { name = "poweroff", caption = "Poweroff", icon = "exit_screen_poweroff" },
-  { name = "reboot"  , caption = "Reboot"  , icon = "exit_screen_reboot"   },
-  { name = "suspend" , caption = "Suspend" , icon = "exit_screen_suspend"  },
-  { name = "logout"  , caption = "Logout"  , icon = "exit_screen_logout"   },
-  { name = "lock"    , caption = "Lock"    , icon = "exit_screen_lock"     },
-  { name = "cancel"  , caption = "Cancel"  , icon = "exit_screen_cancel"   },
+  { name = "reboot",   caption = "Reboot",   icon = "exit_screen_reboot" },
+  { name = "suspend",  caption = "Suspend",  icon = "exit_screen_suspend" },
+  { name = "logout",   caption = "Logout",   icon = "exit_screen_logout" },
+  { name = "lock",     caption = "Lock",     icon = "exit_screen_lock" },
+  { name = "cancel",   caption = "Cancel",   icon = "exit_screen_cancel" },
 }
 
 -- callback function for each button
 local commands = {
-  poweroff = function ()
+  poweroff = function()
     awful.spawn.with_shell("poweroff")
   end,
-
-  reboot = function ()
+  reboot = function()
     awful.spawn.with_shell("reboot")
   end,
-
-  suspend = function ()
+  suspend = function()
     awesome.emit_signal("exit_screen::hide")
     awful.spawn.with_shell("systemctl suspend")
   end,
-
-  logout = function ()
+  logout = function()
     awesome.quit()
   end,
-
-  lock = function ()
+  lock = function()
     awesome.emit_signal("exit_screen::hide")
     awesome.emit_signal("lock_screen::show")
   end,
-
-  cancel = function ()
+  cancel = function()
     awesome.emit_signal("exit_screen::hide")
   end,
 }
@@ -80,7 +75,7 @@ ExitScreen.__index = ExitScreen
 
 
 -- Class constructor
-function ExitScreen:new (screen)
+function ExitScreen:new(screen)
   -- create new class instance
   local exit_screen = {}
   setmetatable(exit_screen, ExitScreen)
@@ -97,9 +92,8 @@ function ExitScreen:new (screen)
   return exit_screen
 end
 
-
 -- create the widget
-function ExitScreen:create_widget ()
+function ExitScreen:create_widget()
   -- Build buttons
   local button_widgets = {}
   for i, button in ipairs(buttons) do
@@ -144,9 +138,8 @@ function ExitScreen:create_widget ()
   return widget
 end
 
-
 -- build button widget
-function ExitScreen:create_button (name, icon, cmd)
+function ExitScreen:create_button(name, icon, cmd)
   local button = wibox.widget {
     layout = wibox.layout.fixed.vertical,
     spacing = beautiful.exit_screen_caption_spacing,
@@ -176,9 +169,8 @@ function ExitScreen:create_button (name, icon, cmd)
   return button
 end
 
-
 -- Init signals
-function ExitScreen:init_signals ()
+function ExitScreen:init_signals()
   -- show the exit screen when signal is broadcasted
   awesome.connect_signal("exit_screen::show", function()
     if (awful.screen.focused() ~= self.screen) then return end
@@ -194,11 +186,10 @@ function ExitScreen:init_signals ()
   end)
 end
 
-
 -- Get mousebindings
-function ExitScreen:get_mousebindings ()
+function ExitScreen:get_mousebindings()
   return gears.table.join(
-    -- Middle click - Hide exit_screen
+  -- Middle click - Hide exit_screen
     awful.button({}, keys.midclick, commands.cancel),
 
     -- Right click - Hide exit_screen
@@ -206,9 +197,8 @@ function ExitScreen:get_mousebindings ()
   )
 end
 
-
 -- Activate keybindings
-function ExitScreen:activate_keybindings ()
+function ExitScreen:activate_keybindings()
   self.screen_grabber = awful.keygrabber.run(function(_, key, event)
     if event == "release" then return end
 
@@ -218,29 +208,25 @@ function ExitScreen:activate_keybindings ()
   end)
 end
 
-
 -- Deactivate keybindings
-function ExitScreen:deactivate_keybindings ()
+function ExitScreen:deactivate_keybindings()
   awful.keygrabber.stop(self.screen_grabber)
 end
 
-
 -- Show exit screen
-function ExitScreen:show ()
+function ExitScreen:show()
   self.widget.visible = true
 end
 
-
 -- Hide exit screen
-function ExitScreen:hide ()
+function ExitScreen:hide()
   self.widget.visible = false
 end
-
 
 -- ========================================
 -- Initialization
 -- ========================================
 
-awful.screen.connect_for_each_screen(function (s)
+awful.screen.connect_for_each_screen(function(s)
   s.exit_screen = ExitScreen:new(s)
 end)
