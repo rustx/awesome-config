@@ -23,15 +23,15 @@ local icons_path = beautiful.icons_path .. "battery/"
 -- ========================================
 
 -- check whether battery is low
-local is_battery_low = function (percentage, status)
+local is_battery_low = function(percentage, status)
   return percentage >= 0
-    and percentage < low_battery_threshold
-    and status ~= "Charging"
+      and percentage < low_battery_threshold
+      and status ~= "Charging"
 end
 
 
 -- show low battery notification
-local notify_low_battery = function ()
+local notify_low_battery = function()
   naughty.notify {
     preset = naughty.config.presets.critical,
     icon = icons_path .. "battery-outline.svg",
@@ -43,7 +43,7 @@ end
 
 
 -- show charger plugged notification
-local notify_charger_plugged = function ()
+local notify_charger_plugged = function()
   naughty.notify {
     icon = icons_path .. "charger-plugged.svg",
     title = "AC Adapter",
@@ -53,7 +53,7 @@ end
 
 
 -- show charger unplugged notification
-local notify_charger_unplugged = function ()
+local notify_charger_unplugged = function()
   naughty.notify {
     icon = icons_path .. "charger-unplugged.svg",
     title = "AC Adapter",
@@ -72,7 +72,7 @@ awesome.connect_signal("daemon::battery::status", function(_, stat)
   local seconds_since_last_check = os.difftime(os.time(), last_battery_check)
 
   if is_battery_low(stat.percentage, stat.status)
-    and seconds_since_last_check > low_battery_reminder_interval then
+      and seconds_since_last_check > low_battery_reminder_interval then
     last_battery_check = os.time()
 
     notify_low_battery()

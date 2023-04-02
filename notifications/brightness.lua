@@ -18,7 +18,7 @@ local icons_path = beautiful.icons_path .. "brightness/"
 -- ========================================
 
 -- Notify brightness change
-local notify_brightness_change = function (percentage)
+local notify_brightness_change = function(percentage)
   return naughty.notify {
     icon = icons_path .. "brightness_notification.svg",
     title = "Brightness",
@@ -33,7 +33,7 @@ end
 
 local notification
 
-awesome.connect_signal("daemon::brightness::percentage", function (percentage)
+awesome.connect_signal("daemon::brightness::percentage", function(percentage)
   -- Remove existing notification
   if notification then naughty.destroy(notification) end
 

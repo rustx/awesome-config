@@ -18,7 +18,7 @@ local icons_path = beautiful.icons_path .. "volume/"
 -- ========================================
 
 -- Notify volume change
-local notify_volume_change = function (percentage)
+local notify_volume_change = function(percentage)
   return naughty.notify {
     icon = icons_path .. "volume_notification.svg",
     title = "Volume",
@@ -28,7 +28,7 @@ end
 
 
 -- Notify volume muted
-local notify_volume_muted = function ()
+local notify_volume_muted = function()
   return naughty.notify {
     icon = icons_path .. "volume_notification_muted.svg",
     title = "Volume",
@@ -43,7 +43,7 @@ end
 
 local notification
 
-awesome.connect_signal("daemon::volume::percentage", function (percentage)
+awesome.connect_signal("daemon::volume::percentage", function(percentage)
   -- Pavucontrol already show volume, so do nothing
   if client.focus and client.focus.class == "Pavucontrol" then return end
 
@@ -52,7 +52,7 @@ awesome.connect_signal("daemon::volume::percentage", function (percentage)
 
   notification = notify_volume_change(percentage)
 end)
-awesome.connect_signal("daemon::volume::muted", function ()
+awesome.connect_signal("daemon::volume::muted", function()
   -- Pavucontrol already show volume, so do nothing
   if client.focus and client.focus.class == "Pavucontrol" then return end
 
