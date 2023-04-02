@@ -61,18 +61,18 @@ end
 -- Initialization
 -- ========================================
 
-awesome.connect_signal("daemon::network::connected::wireless", function (_, essid)
+awesome.connect_signal("daemon::network::connected::wireless", function(_, essid)
   notify_connected_wireless(essid)
 end)
 
-awesome.connect_signal("daemon::network::connected::wired", function (interface)
+awesome.connect_signal("daemon::network::connected::wired", function(interface)
   notify_connected_wired(interface)
 end)
 
-awesome.connect_signal("daemon::network::disconnected::wireless", function ()
+awesome.connect_signal("daemon::network::disconnected::wireless", function()
   notify_disconnected_wireless()
 end)
 
-awesome.connect_signal("daemon::network::disconnected::wired", function ()
+awesome.connect_signal("daemon::network::disconnected::wired", function()
   notify_disconnected_wired()
 end)

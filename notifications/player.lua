@@ -18,7 +18,7 @@ local icons_path = beautiful.icons_path .. "player/"
 -- ========================================
 
 -- Determine player icon
-local get_player_icon = function (status)
+local get_player_icon = function(status)
   local icon_map = {
     Playing = icons_path .. "player_playing.svg",
     Paused  = icons_path .. "player_paused.svg",
@@ -30,7 +30,7 @@ end
 
 
 -- Notify player status
-local notify_player_status = function (player, artist, title, status)
+local notify_player_status = function(player, artist, title, status)
   return naughty.notify {
     icon = get_player_icon(status),
     title = string.format("%s - %s", player, status),
@@ -45,7 +45,7 @@ end
 
 local notification
 
-awesome.connect_signal("daemon::player::status", function (...)
+awesome.connect_signal("daemon::player::status", function(...)
   -- Remove existing notification
   if notification then naughty.destroy(notification) end
 
