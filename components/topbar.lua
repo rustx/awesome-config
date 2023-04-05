@@ -7,6 +7,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local quake = require("components.quake")
 local beautiful = require("beautiful")
+local helpers = require("helpers")
 
 local left_widgets = {
   "taglist",
@@ -85,7 +86,12 @@ end
 
 awful.screen.connect_for_each_screen(function(s)
   s.promptbox = awful.widget.prompt({ bg_cursor = beautiful.color.white })
-  s.quake = quake({ app = Apps.terminal, followtag = true, name = 'Quake' })
+  s.quake = quake({
+    app = Apps.terminal,
+    followtag = true,
+    name = 'Quake',
+    argname = helpers.quake_argname(Apps.terminal)
+  })
   s.topbar = awful.wibar({
     screen = s,
     visible = true,

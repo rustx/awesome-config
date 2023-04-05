@@ -3,25 +3,25 @@
 -- helper functions
 --
 
-local wibox = require("wibox")
-local awful = require("awful")
-local gears = require("gears")
+local wibox                    = require("wibox")
+local awful                    = require("awful")
+local gears                    = require("gears")
 
-local beautiful = require("beautiful")
+local beautiful                = require("beautiful")
 
-local https = require("ssl.https")
-local http  = require("socket.http")
-local ltn12 = require("ltn12")
-local mime  = require("mime")
+local https                    = require("ssl.https")
+local http                     = require("socket.http")
+local ltn12                    = require("ltn12")
+local mime                     = require("mime")
 
-local helpers = {}
+local helpers                  = {}
 
 -- ========================================
 -- Package
 -- ========================================
 
 -- Check package exists
-helpers.is_module_available = function (name)
+helpers.is_module_available    = function(name)
   if package.loaded[name] then return true end
 
   for _, searcher in ipairs(package.searchers or package.loaders) do
@@ -60,7 +60,7 @@ end
 --end
 
 -- generate rounded rect shape
-helpers.rrect = function (cr, w, h)
+helpers.rrect                  = function(cr, w, h)
   gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
 end
 
@@ -71,7 +71,7 @@ helpers.separators_arrow_right = function(col1, col2)
   widget.col1 = col1
   widget.col2 = col2
 
-  widget.fit = function(_,  _, _)
+  widget.fit = function(_, _, _)
     return separators.width, separators.height
   end
 
@@ -86,14 +86,14 @@ helpers.separators_arrow_right = function(col1, col2)
       cr:set_source_rgba(gears.color.parse_color(widget.col2))
       cr:new_path()
       cr:move_to(0, 0)
-      cr:line_to(width, height/2)
+      cr:line_to(width, height / 2)
       cr:line_to(width, 0)
       cr:close_path()
       cr:fill()
 
       cr:new_path()
       cr:move_to(0, height)
-      cr:line_to(width, height/2)
+      cr:line_to(width, height / 2)
       cr:line_to(width, height)
       cr:close_path()
       cr:fill()
@@ -103,24 +103,24 @@ helpers.separators_arrow_right = function(col1, col2)
       cr:set_source_rgba(gears.color.parse_color(widget.col1))
       cr:new_path()
       cr:move_to(0, 0)
-      cr:line_to(width, height/2)
+      cr:line_to(width, height / 2)
       cr:line_to(0, height)
       cr:close_path()
       cr:fill()
     end
- end
+  end
 
- return widget
+  return widget
 end
 
 -- Left arrow separator
-helpers.separators_arrow_left = function(col1, col2)
+helpers.separators_arrow_left  = function(col1, col2)
   local separators = { height = 0, width = 9 }
   local widget = wibox.widget.base.make_widget()
   widget.col1 = col1
   widget.col2 = col2
 
-  widget.fit = function(_,  _, _)
+  widget.fit = function(_, _, _)
     return separators.width, separators.height
   end
 
@@ -135,32 +135,32 @@ helpers.separators_arrow_left = function(col1, col2)
       cr:set_source_rgba(gears.color.parse_color(widget.col1))
       cr:new_path()
       cr:move_to(width, 0)
-      cr:line_to(0, height/2)
+      cr:line_to(0, height / 2)
       cr:line_to(0, 0)
       cr:close_path()
       cr:fill()
 
       cr:new_path()
       cr:move_to(width, height)
-      cr:line_to(0, height/2)
+      cr:line_to(0, height / 2)
       cr:line_to(0, height)
       cr:close_path()
       cr:fill()
     end
 
-  if widget.col2 ~= "alpha" then
-    cr:new_path()
-    cr:move_to(width, 0)
-    cr:line_to(0, height/2)
-    cr:line_to(width, height)
-    cr:close_path()
+    if widget.col2 ~= "alpha" then
+      cr:new_path()
+      cr:move_to(width, 0)
+      cr:line_to(0, height / 2)
+      cr:line_to(width, height)
+      cr:close_path()
 
-    cr:set_source_rgba(gears.color.parse_color(widget.col2))
-    cr:fill()
+      cr:set_source_rgba(gears.color.parse_color(widget.col2))
+      cr:fill()
+    end
   end
- end
 
- return widget
+  return widget
 end
 
 -- ========================================
@@ -168,7 +168,7 @@ end
 -- ========================================
 
 -- make https request
-helpers.https_request = function(host, url, user, pass)
+helpers.https_request          = function(host, url, user, pass)
   local resp = {}
 
   local status, code, head = https.request {
@@ -188,7 +188,7 @@ helpers.https_request = function(host, url, user, pass)
 end
 
 -- make http request
-helpers.http_request = function(host, url, user, pass)
+helpers.http_request           = function(host, url, user, pass)
   local resp = {}
 
   local status, code, head = http.request {
@@ -208,19 +208,19 @@ helpers.http_request = function(host, url, user, pass)
 end
 
 -- get main process name
-helpers.get_main_process_name = function (cmd)
+helpers.get_main_process_name  = function(cmd)
   -- remove whitespace
   cmd = cmd:gsub("%s+$", "")
 
   local first_space_idx = cmd:find(" ")
 
   return first_space_idx ~= nil
-    and cmd:sub(0, first_space_idx - 1)
-    or  cmd
+      and cmd:sub(0, first_space_idx - 1)
+      or cmd
 end
 
 -- set dynamic tags
-helpers.dynamic_tags =  function(s)
+helpers.dynamic_tags           = function(s)
   local tag_names = {}
   local tag_layouts = {}
   local count = screen:count()
@@ -235,7 +235,7 @@ helpers.dynamic_tags =  function(s)
 end
 
 -- set tags in appropriate screen
-helpers.get_screen = function(t)
+helpers.get_screen             = function(t)
   for _, tag in pairs(Tags) do
     if tag.name == t then
       return tag.screen[screen:count()]
@@ -244,7 +244,7 @@ helpers.get_screen = function(t)
 end
 
 -- set widgets in bar components
-helpers.set_widgets = function(s, bar, direction, color, widgets)
+helpers.set_widgets            = function(s, bar, direction, color, widgets)
   local element = bar:get_children_by_id(direction)[1]
 
   local arrow = function(direction, color)
@@ -284,16 +284,16 @@ helpers.set_widgets = function(s, bar, direction, color, widgets)
 end
 
 -- get percentage colors
-helpers.get_pct_color = function(pct, dir)
+helpers.get_pct_color          = function(pct, dir)
   local colors = {
-    [25]  = { up = beautiful.fg_normal,    down = beautiful.color.red    },
+    [25]  = { up = beautiful.fg_normal, down = beautiful.color.red },
     [50]  = { up = beautiful.color.yellow, down = beautiful.color.orange },
     [75]  = { up = beautiful.color.orange, down = beautiful.color.yellow },
-    [100] = { up = beautiful.color.red,    down = beautiful.fg_normal    },
+    [100] = { up = beautiful.color.red, down = beautiful.fg_normal },
   }
   if pct <= 25 then
     return colors[25][dir]
-  elseif pct > 25  and pct <= 50 then
+  elseif pct > 25 and pct <= 50 then
     return colors[50][dir]
   elseif pct > 50 and pct <= 75 then
     return colors[75][dir]
@@ -303,58 +303,58 @@ helpers.get_pct_color = function(pct, dir)
 end
 
 -- get vpn interfaces
-helpers.get_tuntap_ifaces = function()
-	local iface = {}
-    for line in io.lines("/proc/net/dev") do
-      local dev = string.match(line, '%s+([tun|tap]-[%d]-):%s+')
-      if dev ~= nil then
-        table.insert(iface, dev)
-      end
+helpers.get_tuntap_ifaces      = function()
+  local iface = {}
+  for line in io.lines("/proc/net/dev") do
+    local dev = string.match(line, '%s+([tun|tap]-[%d]-):%s+')
+    if dev ~= nil then
+      table.insert(iface, dev)
     end
-	return iface
+  end
+  return iface
 end
 
 -- get active interfaces
-helpers.get_active_ifaces = function()
-    local iface = {}
-    for line in io.lines("/proc/net/dev") do
-      local dev = string.match(line, '^%s-([en|sl|wl|ww|pp|et][%l%d+]+):%s+')
-      if dev ~= nil and dev ~= "lo" then
-        table.insert(iface, dev)
-      end
+helpers.get_active_ifaces      = function()
+  local iface = {}
+  for line in io.lines("/proc/net/dev") do
+    local dev = string.match(line, '^%s-([en|sl|wl|ww|pp|et][%l%d+]+):%s+')
+    if dev ~= nil and dev ~= "lo" then
+      table.insert(iface, dev)
     end
-	return iface
+  end
+  return iface
 end
 
 -- get touchpad ids
-helpers.get_touchpad_ids = function()
+helpers.get_touchpad_ids       = function()
   local f
-	local ids = {}
-    awful.spawn.with_line_callback("xinput list", {
-      stdout = function(line)
-        if string.find(line, "TouchPad") or string.find(line, "GlidePoint") then
-          table.insert(ids, string.match(line, '.*id=(%d+).'))
-          print("Touchpad id found :" .. string.match(line, '.*id=(%d+).') )
+  local ids = {}
+  awful.spawn.with_line_callback("xinput list", {
+    stdout = function(line)
+      if string.find(line, "TouchPad") or string.find(line, "GlidePoint") then
+        table.insert(ids, string.match(line, '.*id=(%d+).'))
+        print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
       elseif string.find(line, 'Touchpad') then
-          table.insert(ids, string.match(line, '.*id=(%d+).'))
-          print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
-        elseif string.find(line, "Xephyr virtual mouse") then
-          table.insert(ids, string.match(line, '.*id=(%d+).'))
-          print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
-        end
+        table.insert(ids, string.match(line, '.*id=(%d+).'))
+        print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
+      elseif string.find(line, "Xephyr virtual mouse") then
+        table.insert(ids, string.match(line, '.*id=(%d+).'))
+        print("Touchpad id found :" .. string.match(line, '.*id=(%d+).'))
       end
-    })
+    end
+  })
 
-    return ids
+  return ids
 end
 
 -- get stick ids
-helpers.get_stick_id = function()
-    local id
+helpers.get_stick_id           = function()
+  local id
 
   awful.spawn.with_line_callback("xinput list", {
     stdout = function(line)
-      if string.find(line,"Stick") then
+      if string.find(line, "Stick") then
         id = string.match(line, 'id=(%d+).')
         print("Stick id is " .. id)
       end
@@ -364,8 +364,24 @@ helpers.get_stick_id = function()
   return id
 end
 
+-- set quake_argname
+helpers.quake_argname          = function(terminal)
+  if terminal == "alacritty" then
+    return "-o window.class.instance=%s"
+  end
+end
+
+-- set terminal title option
+helpers.terminal_title         = function(terminal)
+  if terminal == "alacritty" then
+    return "--title"
+  else
+    return "-title"
+  end
+end
+
 -- start a monitoring script and monitor its output
-helpers.start_monitor = function (script, callbacks)
+helpers.start_monitor          = function(script, callbacks)
   -- remove whitespace and escape quotes
   script = script:gsub("^%s+", ""):gsub("%s+$", ""):gsub('"', '\\"')
 
@@ -379,7 +395,7 @@ helpers.start_monitor = function (script, callbacks)
   )
 
   -- First, kill any existing monitor processes
-  awful.spawn.easy_async_with_shell(kill_monitor_script, function ()
+  awful.spawn.easy_async_with_shell(kill_monitor_script, function()
     -- Start monitor process
     awful.spawn.with_line_callback(monitor_script, callbacks)
   end)
@@ -390,10 +406,10 @@ end
 -- ========================================
 
 -- change brightness
-helpers.change_brightness = function (change_by)
+helpers.change_brightness      = function(change_by)
   local cmd = change_by < 0
-    and "light -U " .. -change_by
-    or  "light -A " .. change_by
+      and "light -U " .. -change_by
+      or "light -A " .. change_by
 
   awful.spawn.with_shell(cmd)
 end
@@ -403,21 +419,21 @@ end
 -- ========================================
 
 -- Play/Pause
-helpers.media_play_pause = function ()
+helpers.media_play_pause       = function()
   local cmd = "playerctl play-pause"
   awful.spawn.with_shell(cmd)
 end
 
 
 -- Previous track
-helpers.media_prev = function ()
+helpers.media_prev = function()
   local cmd = "playerctl previous"
   awful.spawn.with_shell(cmd)
 end
 
 
 -- Next track
-helpers.media_next = function ()
+helpers.media_next = function()
   local cmd = "playerctl next"
   awful.spawn.with_shell(cmd)
 end
@@ -428,10 +444,10 @@ end
 -- ========================================
 
 -- change volume
-helpers.change_volume = function (change_by)
+helpers.change_volume = function(change_by)
   local percentage = change_by < 0
-    and string.format("-%s%%", -change_by)
-    or  string.format("+%s%%", change_by)
+      and string.format("-%s%%", -change_by)
+      or string.format("+%s%%", change_by)
 
   local cmd = "pactl set-sink-volume @DEFAULT_SINK@ " .. percentage
 
@@ -440,7 +456,7 @@ end
 
 
 -- toggle volume mute
-helpers.toggle_volume_mute = function ()
+helpers.toggle_volume_mute = function()
   local cmd = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
   awful.spawn.with_shell(cmd)
 end
@@ -451,7 +467,7 @@ end
 -- ========================================
 
 -- get language map index
-helpers.get_language_map_index = function (key, val)
+helpers.get_language_map_index = function(key, val)
   for i, pair in ipairs(Languages) do
     if pair[key] == val then return i end
   end
@@ -461,7 +477,7 @@ end
 
 
 -- get language from engine name
-helpers.get_language = function (engine)
+helpers.get_language = function(engine)
   local index = helpers.get_language_map_index("engine", engine)
 
   return index == nil and "unknown" or Languages[index].lang
@@ -469,7 +485,7 @@ end
 
 
 -- get engine name from Language
-helpers.get_engine = function (language)
+helpers.get_engine = function(language)
   local index = helpers.get_language_map_index("lang", language)
 
   return index == nil and "unknown" or Languages[index].engine
@@ -477,19 +493,19 @@ end
 
 
 -- set language
-helpers.set_language = function (language)
+helpers.set_language = function(language)
   local engine = helpers.get_engine(language)
   local set_engine_script = "ibus engine " .. engine
 
-  awful.spawn.easy_async_with_shell(set_engine_script, function ()
+  awful.spawn.easy_async_with_shell(set_engine_script, function()
     awesome.emit_signal("daemon::language", language)
   end)
 end
 
 
 -- switch language
-helpers.switch_language = function ()
-  awful.spawn.easy_async_with_shell("ibus engine", function (stdout)
+helpers.switch_language = function()
+  awful.spawn.easy_async_with_shell("ibus engine", function(stdout)
     local curr_index = helpers.get_language_map_index("engine", stdout:gsub("%s+", ""))
 
     local next_index = curr_index == #Languages and 1 or curr_index + 1

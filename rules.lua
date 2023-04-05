@@ -160,7 +160,7 @@ local rules = {
         "Terminator"
       },
       name = {
-        "urxvt_shell"
+        string.format("%s_shell", Apps.terminal)
       }
     },
     properties = {

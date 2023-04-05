@@ -16,7 +16,7 @@ local config_dir = gears.filesystem.get_configuration_dir()
 
 -- define default apps
 Apps = {
-  terminal          = "urxvtc",
+  terminal          = "alacritty",
   browser           = "brave-browser",
   scrlocker         = "xscreensaver-command --lock",
   editor            = os.getenv("EDITOR") or "vim",

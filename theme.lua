@@ -69,7 +69,7 @@ theme.fg_urgent                 = color.red
 theme.fg_minimize               = color.lightgrey
 
 -- Borders/Gaps
-theme.useless_gap               = dpi(2)
+theme.useless_gap               = dpi(1)
 theme.screen_margin             = theme.useless_gap
 theme.border_width              = dpi(1)
 theme.border_radius             = dpi(5)
