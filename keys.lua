@@ -565,7 +565,7 @@ keys.globalkeys = gears.table.join(
     { modkey, altkey }, "v",
     function()
       local term = Apps.terminal
-      awful.spawn(string.format("%s %s %s_ide -e sh -c 'nvim'", term, helpers.terminal_title(term), term))
+      awful.spawn(string.format("%s %s vim_ide -e sh -c 'nvim'", term, helpers.terminal_title(term)))
     end,
     { description = "open vim ide", group = "applications" }
   ),
