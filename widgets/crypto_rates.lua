@@ -35,7 +35,7 @@ end
 
 -- format trend text box with colors and arrow
 local fmt_trend = function(trend)
-  local fmt = trend < 0 and { color = 'red', arrow = '⮯' } or { color = 'green', arrow = '⮭' }
+  local fmt = trend < 0 and { color = 'red', arrow = '󱞢' } or { color = 'green', arrow = '󱟀' }
   return fmt
 end
 
