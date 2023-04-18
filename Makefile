@@ -45,7 +45,7 @@ apt_deps:
 	sudo -S apt-get install -y \
 	compton xsel xclip python3-pip gtk2-engines-murrine gtk2-engines-pixbuf light redshift \
 	redshift-gtk maim rofi slick-greeter lxappearance playerctl inotify-tools ttfautohint fontforge liblua5.3-dev libpam0g-dev \
-	lua-sec lua-socket lua-http lua-json lua-cjson
+	lua-sec lua-socket lua-http lua-json lua-cjson exuberant-ctags ripgrep unclutter
 
 pip_deps: apt-deps
 	pip installl powerline-shell
