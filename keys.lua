@@ -341,7 +341,7 @@ keys.globalkeys = gears.table.join(
   ),
 
   awful.key(
-    { modkey, ctrlkey }, "m",
+    { modkey, ctrlkey }, "p",
     function()
       awful.screen.focus_relative(-1)
     end,
