@@ -104,7 +104,7 @@ end
 
 -- Resize local client
 local floating_resize_amount = dpi(20)
-local tiling_resize_factor = 0.00
+local tiling_resize_factor = 0.05
 
 local function resize_client(c, direction)
   if awful.layout.get(mouse.screen) == awful.layout.suit.floating
